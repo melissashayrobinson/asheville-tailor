@@ -1,8 +1,13 @@
-export const dynamic = "force-dynamic";
-
 import { createClient } from "@supabase/supabase-js";
 import StatusButtons from "../components/StatusButtons";
 
+export const dynamic = "force-dynamic";
+export const metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 export default async function AdminPage() {
     console.log(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
