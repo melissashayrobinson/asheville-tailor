@@ -74,17 +74,14 @@ export default function EstimateWizard() {
   return (
     <section id="estimate" className="bg-[#1c1b19] px-6 py-24 text-[#f5f2eb] lg:px-12">
       <div className="mx-auto max-w-4xl">
-        <p className="mb-4 text-xs uppercase tracking-[0.35em] text-stone-400">
-          Start Here
-        </p>
-
+      
         <h2 className="mb-6 text-5xl font-light tracking-[-0.03em] md:text-7xl">
           Book services.
         </h2>
 
         <p className="mb-12 max-w-2xl text-lg leading-relaxed text-stone-300">
           Tell us what you need altered, when you need it, and what kind of fit
-          you want. You'll receive a pricing range before booking.
+          you want. You'll receive a price range before booking.
         </p>
 
         <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 md:p-10">
@@ -204,7 +201,7 @@ export default function EstimateWizard() {
       setPhotos(Array.from(e.target.files));
     }
   }}
-  className="w-full rounded-2xl border border-white/20 bg-transparent p-5 text-[#f5f2eb] file:mr-4 file:rounded-full file:border-0 file:bg-[#f5f2eb] file:px-4 file:py-2 file:text-[#1c1b19]"
+  className="w-full rounded-2xl border border-white/20 bg-transparent p-5 mb-5 text-[#f5f2eb] file:mr-4 file:rounded-full file:border-0 file:bg-[#f5f2eb] file:px-4 file:py-2 file:text-[#1c1b19]"
 />
 
 {photos.length > 0 && (

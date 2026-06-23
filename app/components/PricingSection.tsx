@@ -36,7 +36,7 @@ export default function PricingSection() {
       <div className="mx-auto max-w-6xl">
      
         <h2 className="mb-6 text-5xl font-light tracking-[-0.03em] md:text-7xl">
-          Transparent pricing, before fitting.
+          The perfect fit, transparently priced.
         </h2>
 
         <p className="mb-14 max-w-4xl text-md leading-relaxed text-stone-600">
