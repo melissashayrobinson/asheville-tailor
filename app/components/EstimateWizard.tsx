@@ -73,15 +73,16 @@ export default function EstimateWizard() {
 
   return (
     <section id="estimate" className="bg-[#1c1b19] px-6 py-24 text-[#f5f2eb] lg:px-12">
-      <div className="mx-auto max-w-4xl">
+      
+      <div className="mx-auto max-w-6xl">
       
         <h2 className="mb-6 text-5xl font-light tracking-[-0.03em] md:text-7xl">
-          Book services.
+          Explore + Book Services
         </h2>
 
         <p className="mb-12 max-w-2xl text-lg leading-relaxed text-stone-300">
           Tell us what you need altered, when you need it, and what kind of fit
-          you want. You'll receive a price range before booking.
+          you want. You'll receive a price range before booking is confirmed.
         </p>
 
         <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 md:p-10">
@@ -99,7 +100,7 @@ export default function EstimateWizard() {
           {step === 1 && (
             <div>
               <h3 className="mb-6 text-3xl font-light">What type of garment?</h3>
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid gap-3 grid-cols-2">
                 {Object.keys(garmentPrices).map((item) => (
                   <button
                     key={item}

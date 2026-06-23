@@ -20,7 +20,7 @@ const pricingGroups = [
     ],
   },
   {
-    title: "Speed + Service",
+    title: "Speed + Urgent Service",
     items: [
       ["Mobile fitting", "$50+"],
       ["Priority turnaround", "+50%"],

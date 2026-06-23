@@ -36,14 +36,14 @@ export default function Home() {
         <a className="rounded-full border border-ink px-5 py-2 text-sm hover:bg-ink hover:text-linen" href="#estimate">Book Now</a>
       </header>
 
-      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16  md:py-24">
-        <div>
-          <p className="mb-5 text-sm uppercase tracking-[0.3em] text-moss">Asheville + Western North Carolina</p>
-          <h1 className="font-serif text-5xl leading-[.98] tracking-tight md:text-7xl">Thoughtful clothing. Made to fit.</h1>
+      <section className="px-6 py-16 md:py-24 lg:px-12">
+        <div className="mx-auto max-w-6xl">
+          <h1 className="font-serif text-5xl leading-[1] tracking-tight md:text-8xl">Cherished clothing. Made&nbsp;to&nbsp;fit.</h1>
           <p className="mt-7 max-w-xl text-lg leading-8 text-ink/75">Mobile tailoring, bridal alterations, and custom garment work for Asheville weddings and destination celebrations throughout Western North Carolina.</p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-4 text-linen" href="#estimate">Book services <ArrowRight className="ml-2 h-4 w-4" /></a>
-            <a className="inline-flex items-center justify-center rounded-full border border-ink px-7 py-4" href="#pricing">View pricing</a>
+
+            <a className="inline-flex items-center justify-center rounded-full border border-ink px-7 py-4" href="#estimate">Book Services</a>
+            <a className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-4 text-linen" href="#pricing">View Pricing <ArrowRight className="ml-2 h-4 w-4" /></a>
           </div>
         </div>
         
@@ -70,7 +70,7 @@ export default function Home() {
 
       <section className="border-y border-ink/10 bg-bone" id="services">
         <div className="mx-auto grid max-w-6xl gap-6 px-6 py-14 md:grid-cols-3">
-          {[['Modern Tailoring', 'Hems, waist adjustments, sleeves, suiting, denim, dresses, and formalwear.'], ['Bridal', 'Wedding dresses, bustles, bridesmaids, mothers, and destination wedding support.'], ['Studio Work', 'Custom projects, heirloom redesign, vintage reworking, and limited commissions.']].map(([title, text]) => (
+          {[['Modern Tailoring', 'Hems, waist adjustments, sleeves, suiting, heritage denim, dresses, and formalwear.'], ['Bridal', 'Wedding dresses, bridesmaids, mothers, and destination wedding support.'], ['Studio Work', 'Custom projects, heirloom redesign, vintage reworking, and limited commissions.']].map(([title, text]) => (
             <div className="rounded-3xl bg-linen p-7" key={title}>
               <h2 className="font-serif text-3xl">{title}</h2>
               <p className="mt-4 leading-7 text-ink/70">{text}</p>
