@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackEvent } from "@/lib/gtag";
 
 const garmentPrices: Record<string, string> = {
   "Wedding dress": "$350-$1,000+",
@@ -62,6 +63,13 @@ export default function EstimateWizard() {
     if (!response.ok) {
       throw new Error("Submission failed");
     }
+
+    trackEvent("estimate_submitted", {
+      garment_type: garment,
+      timeline: timeline,
+      has_photos: photos.length > 0,
+    });
+
 
     setSubmitted(true);
   } catch (error) {
