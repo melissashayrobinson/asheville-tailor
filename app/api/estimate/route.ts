@@ -3,22 +3,51 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
+    const formData = await request.formData();
 
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
+    const photoUrls: string[] = [];
+    const photos = formData.getAll("photos") as File[];
+
+    for (const photo of photos) {
+      if (!photo || photo.size === 0) continue;
+
+      const fileExt = photo.name.split(".").pop();
+      const fileName = `${crypto.randomUUID()}.${fileExt}`;
+      const filePath = `estimate-requests/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("estimate-photos")
+        .upload(filePath, photo, {
+          contentType: photo.type,
+        });
+
+      if (uploadError) {
+        console.error(uploadError);
+        throw uploadError;
+      }
+
+      const { data } = supabase.storage
+        .from("estimate-photos")
+        .getPublicUrl(filePath);
+
+      photoUrls.push(data.publicUrl);
+    }
+
     const { error } = await supabase.from("estimate_requests").insert({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      garment: data.garment,
-      timeline: data.timeline,
-      event_date: data.eventDate,
-      details: data.details,
-      photo_note: data.photoNote,
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      garment: formData.get("garment"),
+      timeline: formData.get("timeline"),
+      event_date: formData.get("eventDate"),
+      details: formData.get("details"),
+      photo_note: formData.get("photoNote"),
+      photo_urls: photoUrls,
       status: "new",
     });
 

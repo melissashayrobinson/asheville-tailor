@@ -66,6 +66,29 @@ export default async function AdminPage() {
               <p>{request.details}</p>
             </div>
 
+            {request.photo_urls?.length > 0 && (
+            <div className="mt-6">
+              <p className="mb-3 font-medium">Photos</p>
+
+              <div className="flex flex-wrap gap-3">
+                {request.photo_urls.map((url: string) => (
+                  <a
+                    key={url}
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={url}
+                      alt="Garment"
+                      className="h-32 w-32 rounded-xl object-cover border"
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
             <StatusButtons
   id={request.id}
   currentStatus={request.status}

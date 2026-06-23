@@ -33,24 +33,20 @@ export default function Home() {
           <a href="#pricing">Pricing</a>
           <a href="#estimate">Get Estimate</a>
         </nav>
-        <a className="rounded-full border border-ink px-5 py-2 text-sm hover:bg-ink hover:text-linen" href="#estimate">Book</a>
+        <a className="rounded-full border border-ink px-5 py-2 text-sm hover:bg-ink hover:text-linen" href="#estimate">Book Now</a>
       </header>
 
-      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[1.15fr_.85fr] md:py-24">
+      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16  md:py-24">
         <div>
           <p className="mb-5 text-sm uppercase tracking-[0.3em] text-moss">Asheville + Western North Carolina</p>
           <h1 className="font-serif text-5xl leading-[.98] tracking-tight md:text-7xl">Thoughtful clothing. Made to fit.</h1>
-          <p className="mt-7 max-w-xl text-lg leading-8 text-ink/75">Mobile tailoring, bridal alterations, and custom garment work designed around your schedule. Upload photos. Receive transparent pricing. Book online.</p>
+          <p className="mt-7 max-w-xl text-lg leading-8 text-ink/75">Mobile tailoring, bridal alterations, and custom garment work for Asheville weddings and destination celebrations throughout Western North Carolina.</p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-4 text-linen" href="#estimate">Get an estimate <ArrowRight className="ml-2 h-4 w-4" /></a>
+            <a className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-4 text-linen" href="#estimate">Book services <ArrowRight className="ml-2 h-4 w-4" /></a>
             <a className="inline-flex items-center justify-center rounded-full border border-ink px-7 py-4" href="#pricing">View pricing</a>
           </div>
         </div>
-        <div className="rounded-[2rem] bg-bone p-8 shadow-sm">
-          <div className="aspect-[4/5] rounded-[1.5rem] bg-[linear-gradient(135deg,#ded2c2,#f8f1e8)] p-8 flex flex-col justify-end">
-            <p className="font-serif text-3xl">Modern fitting service for real life, wedding weeks, and favorite pieces worth keeping.</p>
-          </div>
-        </div>
+        
       </section>
 
 <section className="px-6 lg:px-12 pb-24">
@@ -72,14 +68,9 @@ export default function Home() {
   </div>
 </section>
 
-
-<EstimateWizard />
-
-<PricingSection />
-
       <section className="border-y border-ink/10 bg-bone" id="services">
         <div className="mx-auto grid max-w-6xl gap-6 px-6 py-14 md:grid-cols-3">
-          {[['Tailoring', 'Hems, waist adjustments, sleeves, suiting, denim, dresses, and formalwear.'], ['Bridal', 'Wedding dresses, bustles, bridesmaids, mothers, and destination wedding support.'], ['Studio Work', 'Custom projects, heirloom redesign, vintage reworking, and limited commissions.']].map(([title, text]) => (
+          {[['Modern Tailoring', 'Hems, waist adjustments, sleeves, suiting, denim, dresses, and formalwear.'], ['Bridal', 'Wedding dresses, bustles, bridesmaids, mothers, and destination wedding support.'], ['Studio Work', 'Custom projects, heirloom redesign, vintage reworking, and limited commissions.']].map(([title, text]) => (
             <div className="rounded-3xl bg-linen p-7" key={title}>
               <h2 className="font-serif text-3xl">{title}</h2>
               <p className="mt-4 leading-7 text-ink/70">{text}</p>
@@ -87,6 +78,12 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+
+<EstimateWizard />
+
+<PricingSection />
+
 
 
 
@@ -106,8 +103,4 @@ export default function Home() {
       </section>
     </main>
   );
-}
-
-function PriceTable({ title, rows }: { title: string; rows: string[][] }) {
-  return <div><h2 className="font-serif text-4xl">{title}</h2><div className="mt-6 divide-y divide-linen/15 rounded-3xl border border-linen/20">{rows.map(([service, price]) => <div className="flex items-center justify-between gap-6 p-5" key={service}><span>{service}</span><span className="text-right text-linen/75">{price}</span></div>)}</div></div>;
 }

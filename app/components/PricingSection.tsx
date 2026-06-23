@@ -1,21 +1,21 @@
 const pricingGroups = [
   {
-    title: "Tailoring",
+    title: "Modern Tailoring",
     items: [
-      ["Pants hem", "$35–$55"],
-      ["Jeans hem", "$40–$65"],
-      ["Waist adjustment", "$45–$95"],
-      ["Sleeves", "$50–$125"],
-      ["Jacket adjustments", "$75–$250"],
+      ["Pants/Jeans hem", "$25-$55"],
+      ["Zipper replacement", "$35-$75"],
+      ["Waist adjustment", "$45-$95"],
+      ["Sleeves", "$50-$125"],
+      ["Jacket adjustments", "$75-$250"],
     ],
   },
   {
     title: "Bridal + Formal",
     items: [
-      ["Bridal consultation", "$50"],
-      ["Bustle", "$95–$250"],
-      ["Simple dress alterations", "$250–$500"],
-      ["Moderate bridal alterations", "$500–$1,000"],
+      ["Consultation", "$50"],
+      ["Bustle", "$95-$250"],
+      ["Simple dress alterations", "$350-$500"],
+      ["Moderate bridal alterations", "$500-$1,000"],
       ["Complex bridal work", "$1,000+"],
     ],
   },
@@ -25,7 +25,7 @@ const pricingGroups = [
       ["Mobile fitting", "$50+"],
       ["Priority turnaround", "+50%"],
       ["Rush turnaround", "+100%"],
-      ["Wedding emergency", "$250 minimum"],
+      ["Wedding emergency", "$350 minimum"],
     ],
   },
 ];
@@ -34,16 +34,13 @@ export default function PricingSection() {
   return (
     <section id="pricing" className="bg-[#f5f2eb] px-6 py-24 text-[#1c1b19] lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <p className="mb-4 text-xs uppercase tracking-[0.35em] text-stone-500">
-          Pricing
-        </p>
-
+     
         <h2 className="mb-6 text-5xl font-light tracking-[-0.03em] md:text-7xl">
-          Transparent ranges before fitting.
+          Transparent pricing, before fitting.
         </h2>
 
-        <p className="mb-14 max-w-2xl text-lg leading-relaxed text-stone-600">
-          Every garment is different, but pricing should not feel mysterious.
+        <p className="mb-14 max-w-4xl text-md leading-relaxed text-stone-600">
+          Every garment is different, but pricing shouldn't feel mysterious.
           Final quotes are confirmed before work begins.
         </p>
 

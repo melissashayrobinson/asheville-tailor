@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 
-
 const garmentPrices: Record<string, string> = {
-  "Wedding dress": "$250–$1,000+",
-  "Bridesmaid dress": "$95–$250",
-  Suit: "$95–$300",
-  Pants: "$35–$95",
-  Jacket: "$75–$250",
-  Dress: "$75–$300",
+  "Wedding dress": "$350-$1,000+",
+  "Bridesmaid dress": "$95-$250",
+  Suit: "$95-$300",
+  Pants: "$25-$95",
+  Jacket: "$75-$250",
+  Dress: "$75-$300",
+  Shirt: "$25-$125",
   Other: "Custom estimate",
 };
 
@@ -28,6 +28,7 @@ export default function EstimateWizard() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
+  const [photos, setPhotos] = useState<File[]>([]);
   const [photoNote, setPhotoNote] = useState("");
 
   const next = () => setStep((s) => Math.min(s + 1, 6));
@@ -38,21 +39,24 @@ export default function EstimateWizard() {
   setSubmitError("");
 
   try {
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("garment", garment);
+    formData.append("timeline", timeline);
+    formData.append("eventDate", eventDate);
+    formData.append("details", details);
+    formData.append("photoNote", photoNote);
+
+    photos.forEach((photo) => {
+      formData.append("photos", photo);
+    });
+
     const response = await fetch("/api/estimate", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        phone,
-        garment,
-        timeline,
-        eventDate,
-        details,
-        photoNote,
-      }),
+      body: formData,
     });
 
     if (!response.ok) {
@@ -75,12 +79,12 @@ export default function EstimateWizard() {
         </p>
 
         <h2 className="mb-6 text-5xl font-light tracking-[-0.03em] md:text-7xl">
-          Get a transparent estimate.
+          Book services.
         </h2>
 
         <p className="mb-12 max-w-2xl text-lg leading-relaxed text-stone-300">
           Tell us what you need altered, when you need it, and what kind of fit
-          you want. You’ll receive a pricing range before booking.
+          you want. You'll receive a pricing range before booking.
         </p>
 
         <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 md:p-10">
@@ -132,7 +136,7 @@ export default function EstimateWizard() {
             <div>
               <h3 className="mb-6 text-3xl font-light">When do you need it?</h3>
               <div className="grid gap-3 sm:grid-cols-3">
-                {["2–3 weeks", "5 business days", "48 hours or less"].map((item) => (
+                {["2-3 weeks", "5 business days", "48 hours or less"].map((item) => (
                   <button
                     key={item}
                     onClick={() => setTimeline(item)}
@@ -191,10 +195,23 @@ export default function EstimateWizard() {
   <div>
     <h3 className="mb-6 text-3xl font-light">Photos help us estimate.</h3>
 
-    <p className="mb-6 text-stone-300">
-      For now, you’ll be prompted to attach photos when the email opens. A front view,
-      back view, and close-up of the issue are best.
-    </p>
+    <input
+  type="file"
+  multiple
+  accept="image/*"
+  onChange={(e) => {
+    if (e.target.files) {
+      setPhotos(Array.from(e.target.files));
+    }
+  }}
+  className="w-full rounded-2xl border border-white/20 bg-transparent p-5 text-[#f5f2eb] file:mr-4 file:rounded-full file:border-0 file:bg-[#f5f2eb] file:px-4 file:py-2 file:text-[#1c1b19]"
+/>
+
+{photos.length > 0 && (
+  <p className="mt-4 text-stone-300">
+    {photos.length} photo{photos.length > 1 ? "s" : ""} selected.
+  </p>
+)}
 
     <textarea
       value={photoNote}
@@ -213,7 +230,7 @@ export default function EstimateWizard() {
                   {garment || "Garment"}
                 </p>
                 <p className="text-5xl font-light">
-                  {garment ? garmentPrices[garment] : "$95–$250"}
+                  {garment ? garmentPrices[garment] : "$95-$250"}
                 </p>
                 {timeline === "5 business days" && (
                   <p className="mt-4 text-stone-600">Priority turnaround may add 50%.</p>
