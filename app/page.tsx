@@ -39,7 +39,7 @@ export default function Home() {
       <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[1.15fr_.85fr] md:py-24">
         <div>
           <p className="mb-5 text-sm uppercase tracking-[0.3em] text-moss">Asheville + Western North Carolina</p>
-          <h1 className="font-serif text-5xl leading-[.98] tracking-tight md:text-7xl">Clothing you love. Made to fit.</h1>
+          <h1 className="font-serif text-5xl leading-[.98] tracking-tight md:text-7xl">Thoughtful clothing. Made to fit.</h1>
           <p className="mt-7 max-w-xl text-lg leading-8 text-ink/75">Mobile tailoring, bridal alterations, and custom garment work designed around your schedule. Upload photos. Receive transparent pricing. Book online.</p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-4 text-linen" href="#estimate">Get an estimate <ArrowRight className="ml-2 h-4 w-4" /></a>
@@ -72,23 +72,6 @@ export default function Home() {
   </div>
 </section>
 
-<section className="relative h-screen">
-  <img
-    src="/images/hero.jpg"
-    alt=""
-    className="absolute inset-0 h-full w-full object-cover"
-  />
-
-  <div className="absolute inset-0 bg-black/15" />
-
-  <div className="absolute bottom-0 left-0 p-10 lg:p-20">
-    <h2 className="text-white text-5xl lg:text-7xl font-light">
-      Thoughtful clothing.
-      <br />
-      Made to fit.
-    </h2>
-  </div>
-</section>
 
 <EstimateWizard />
 
