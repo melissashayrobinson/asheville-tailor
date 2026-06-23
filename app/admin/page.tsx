@@ -90,9 +90,9 @@ export default async function AdminPage() {
           )}
 
             <StatusButtons
-  id={request.id}
-  currentStatus={request.status}
-/>
+              id={request.id}
+              currentStatus={request.status}
+            />
 
             <div className="mt-4 space-y-1 text-stone-600">
                 <p className="font-medium">Submitted to You:</p>

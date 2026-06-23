@@ -1,6 +1,8 @@
 import { ArrowRight, Calendar, Camera, MapPin, Sparkles } from 'lucide-react';
 import EstimateWizard from "./components/EstimateWizard";
 import PricingSection from "./components/PricingSection";
+import Footer from "./components/Footer";
+import AlterationsList from "./components/AlterationsList";
 
 const tailoringPrices = [
   ['Pants hem', '$35-55'],
@@ -49,24 +51,24 @@ export default function Home() {
         
       </section>
 
-<section className="px-6 lg:px-12 pb-24">
-  <div className="relative overflow-hidden rounded-[32px]">
-    <img
-      src="/images/hero.jpg"
-      alt="Tailoring and garment work"
-      className="h-[75vh] w-full object-cover"
-    />
+      <section className="px-6 lg:px-12 pb-24">
+        <div className="relative overflow-hidden rounded-[32px]">
+          <img
+            src="/images/hero.jpg"
+            alt="Tailoring and garment work"
+            className="h-[75vh] w-full object-cover"
+          />
 
-    <div className="absolute inset-0 bg-black/10" />
+          <div className="absolute inset-0 bg-black/10" />
 
-    <div className="absolute bottom-0 left-0 p-10 lg:p-16">
-      <p className="max-w-lg text-white text-lg leading-relaxed">
-        Modern fitting service for real life, wedding weeks,
-        and favorite pieces worth keeping.
-      </p>
-    </div>
-  </div>
-</section>
+          <div className="absolute bottom-0 left-0 p-10 lg:p-16">
+            <p className="max-w-lg text-white text-lg leading-relaxed">
+              Modern fitting service for real life, wedding weeks,
+              and favorite pieces worth keeping.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <section className="border-y border-ink/10 bg-bone" id="services">
         <div className="mx-auto grid max-w-6xl gap-6 px-6 py-14 md:grid-cols-3">
@@ -79,19 +81,20 @@ export default function Home() {
         </div>
       </section>
 
+      <AlterationsList />
 
-<EstimateWizard />
+      <EstimateWizard />
 
-<PricingSection />
-
-
-
+      <PricingSection />
 
       <section className="mx-auto max-w-3xl px-6 py-20 text-center" id="estimate">
         <p className="text-center text-sm uppercase tracking-[0.3em] text-moss">Start here</p>
         <h2 className="mt-4 mb-5 text-center font-serif text-5xl">Ready to get started?</h2>
         <a className="rounded-full border border-ink px-5 py-2 text-sm hover:bg-ink hover:text-linen" href="#estimate">Book Services</a>
       </section>
+
+      <Footer />
+
     </main>
   );
 }
