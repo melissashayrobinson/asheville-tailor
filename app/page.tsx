@@ -88,28 +88,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <p className="text-sm uppercase tracking-[0.3em] text-moss">How it works</p>
-        <div className="mt-8 grid gap-5 md:grid-cols-4">
-          {[['Upload photos', Camera], ['Receive a range', Sparkles], ['Book a fitting', Calendar], ['Choose mobile or local', MapPin]].map(([label, Icon]: any) => (
-            <div className="rounded-3xl border border-ink/10 p-6" key={label}>
-              <Icon className="mb-5 h-6 w-6" />
-              <h3 className="font-serif text-2xl">{label}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      <section className="bg-ink text-linen" id="pricing">
-        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-2">
-          <PriceTable title="Tailoring" rows={tailoringPrices} />
-          <PriceTable title="Bridal" rows={bridalPrices} />
-          <div className="md:col-span-2 rounded-3xl border border-linen/20 p-7">
-            <h3 className="font-serif text-3xl">Convenience + rush options</h3>
-            <p className="mt-4 text-linen/75">Mobile fitting within 15 miles: $50. Priority turnaround, 5 business days: +50%. Rush turnaround, 48 hours: +100%. Wedding emergency service starts at $250.</p>
-          </div>
-        </div>
-      </section>
 
       <section className="mx-auto max-w-3xl px-6 py-20" id="estimate">
         <p className="text-center text-sm uppercase tracking-[0.3em] text-moss">Start here</p>
