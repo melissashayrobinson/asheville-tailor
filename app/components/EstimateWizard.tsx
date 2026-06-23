@@ -255,11 +255,11 @@ export default function EstimateWizard() {
                 disabled={isSubmitting}
                 className="inline-flex rounded-full bg-[#f5f2eb] px-8 py-4 text-[#1c1b19] transition hover:bg-white disabled:opacity-60"
               >
-                {isSubmitting ? "Sending..." : "Request Estimate"}
+                {isSubmitting ? "Sending..." : "Request Booking"}
               </button>
               {submitted && (
                 <p className="mt-4 text-stone-300">
-                  Thank you. Your estimate request has been received.
+                  Thank you. Your booking request has been received.
                 </p>
               )}
 
