@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { trackEvent } from "@/lib/gtag";
+import { trackEvent } from "../../lib/gtag";
 
 const garmentPrices: Record<string, string> = {
   "Wedding dress": "$350-$1,000+",
