@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -81,7 +82,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
@@ -161,6 +161,8 @@ export default function RootLayout({
         {children}
         <Footer />
       </body>
+
+      <GoogleAnalytics gaId="G-GSH3R1Q7KT" />
     </html>
   );
 }
