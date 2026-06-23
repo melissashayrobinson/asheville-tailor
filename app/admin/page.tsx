@@ -72,7 +72,7 @@ export default async function AdminPage() {
 />
 
             <div className="mt-4 space-y-1 text-stone-600">
-                <p className="font-medium">Submitted:</p>
+                <p className="font-medium">Submitted to You:</p>
                 <p>{new Date(request.created_at).toLocaleString()}</p>
 
                 <p className="font-medium">Deadline:</p>
