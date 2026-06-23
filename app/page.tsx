@@ -1,0 +1,151 @@
+import { ArrowRight, Calendar, Camera, MapPin, Sparkles } from 'lucide-react';
+import EstimateWizard from "./components/EstimateWizard";
+import PricingSection from "./components/PricingSection";
+
+const tailoringPrices = [
+  ['Pants hem', '$35–55'],
+  ['Jeans hem', '$40–65'],
+  ['Skirt hem', '$45–95'],
+  ['Dress hem', '$75–175'],
+  ['Waist adjustment', '$45–95'],
+  ['Sleeve shortening', '$50–125'],
+  ['Jacket tailoring', '$75–250'],
+  ['Suit alterations', '$95–300']
+];
+
+const bridalPrices = [
+  ['Bridal consultation', '$50, credited toward work'],
+  ['Simple wedding dress alterations', '$250–500'],
+  ['Moderate wedding dress alterations', '$500–1,000'],
+  ['Complex bridal alterations', '$1,000+'],
+  ['Bustle', '$95–250'],
+  ['Wedding emergency service', 'Starting at $250']
+];
+
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-linen text-ink">
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+        <a className="font-serif text-2xl tracking-tight" href="#">Asheville Tailor</a>
+        <nav className="hidden gap-8 text-sm md:flex">
+          <a href="#services">Services</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#estimate">Get Estimate</a>
+        </nav>
+        <a className="rounded-full border border-ink px-5 py-2 text-sm hover:bg-ink hover:text-linen" href="#estimate">Book</a>
+      </header>
+
+      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[1.15fr_.85fr] md:py-24">
+        <div>
+          <p className="mb-5 text-sm uppercase tracking-[0.3em] text-moss">Asheville + Western North Carolina</p>
+          <h1 className="font-serif text-5xl leading-[.98] tracking-tight md:text-7xl">Clothing you love. Made to fit.</h1>
+          <p className="mt-7 max-w-xl text-lg leading-8 text-ink/75">Mobile tailoring, bridal alterations, and custom garment work designed around your schedule. Upload photos. Receive transparent pricing. Book online.</p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-4 text-linen" href="#estimate">Get an estimate <ArrowRight className="ml-2 h-4 w-4" /></a>
+            <a className="inline-flex items-center justify-center rounded-full border border-ink px-7 py-4" href="#pricing">View pricing</a>
+          </div>
+        </div>
+        <div className="rounded-[2rem] bg-bone p-8 shadow-sm">
+          <div className="aspect-[4/5] rounded-[1.5rem] bg-[linear-gradient(135deg,#ded2c2,#f8f1e8)] p-8 flex flex-col justify-end">
+            <p className="font-serif text-3xl">Modern fitting service for real life, wedding weeks, and favorite pieces worth keeping.</p>
+          </div>
+        </div>
+      </section>
+
+<section className="px-6 lg:px-12 pb-24">
+  <div className="relative overflow-hidden rounded-[32px]">
+    <img
+      src="/images/hero.jpg"
+      alt="Tailoring and garment work"
+      className="h-[75vh] w-full object-cover"
+    />
+
+    <div className="absolute inset-0 bg-black/10" />
+
+    <div className="absolute bottom-0 left-0 p-10 lg:p-16">
+      <p className="max-w-lg text-white text-lg leading-relaxed">
+        Modern fitting service for real life, wedding weeks,
+        and favorite pieces worth keeping.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section className="relative h-screen">
+  <img
+    src="/images/hero.jpg"
+    alt=""
+    className="absolute inset-0 h-full w-full object-cover"
+  />
+
+  <div className="absolute inset-0 bg-black/15" />
+
+  <div className="absolute bottom-0 left-0 p-10 lg:p-20">
+    <h2 className="text-white text-5xl lg:text-7xl font-light">
+      Thoughtful clothing.
+      <br />
+      Made to fit.
+    </h2>
+  </div>
+</section>
+
+<EstimateWizard />
+
+<PricingSection />
+
+      <section className="border-y border-ink/10 bg-bone" id="services">
+        <div className="mx-auto grid max-w-6xl gap-6 px-6 py-14 md:grid-cols-3">
+          {[['Tailoring', 'Hems, waist adjustments, sleeves, suiting, denim, dresses, and formalwear.'], ['Bridal', 'Wedding dresses, bustles, bridesmaids, mothers, and destination wedding support.'], ['Studio Work', 'Custom projects, heirloom redesign, vintage reworking, and limited commissions.']].map(([title, text]) => (
+            <div className="rounded-3xl bg-linen p-7" key={title}>
+              <h2 className="font-serif text-3xl">{title}</h2>
+              <p className="mt-4 leading-7 text-ink/70">{text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <p className="text-sm uppercase tracking-[0.3em] text-moss">How it works</p>
+        <div className="mt-8 grid gap-5 md:grid-cols-4">
+          {[['Upload photos', Camera], ['Receive a range', Sparkles], ['Book a fitting', Calendar], ['Choose mobile or local', MapPin]].map(([label, Icon]: any) => (
+            <div className="rounded-3xl border border-ink/10 p-6" key={label}>
+              <Icon className="mb-5 h-6 w-6" />
+              <h3 className="font-serif text-2xl">{label}</h3>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-ink text-linen" id="pricing">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-2">
+          <PriceTable title="Tailoring" rows={tailoringPrices} />
+          <PriceTable title="Bridal" rows={bridalPrices} />
+          <div className="md:col-span-2 rounded-3xl border border-linen/20 p-7">
+            <h3 className="font-serif text-3xl">Convenience + rush options</h3>
+            <p className="mt-4 text-linen/75">Mobile fitting within 15 miles: $50. Priority turnaround, 5 business days: +50%. Rush turnaround, 48 hours: +100%. Wedding emergency service starts at $250.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-3xl px-6 py-20" id="estimate">
+        <p className="text-center text-sm uppercase tracking-[0.3em] text-moss">Start here</p>
+        <h2 className="mt-4 text-center font-serif text-5xl">Get a transparent estimate.</h2>
+        <form className="mt-10 rounded-[2rem] bg-bone p-8">
+          <div className="grid gap-5">
+            <label className="grid gap-2">Name<input className="rounded-xl border border-ink/15 bg-linen px-4 py-3" name="name" /></label>
+            <label className="grid gap-2">Email<input className="rounded-xl border border-ink/15 bg-linen px-4 py-3" name="email" type="email" /></label>
+            <label className="grid gap-2">Garment type<select className="rounded-xl border border-ink/15 bg-linen px-4 py-3" name="garment"><option>Wedding dress</option><option>Dress</option><option>Pants/jeans</option><option>Suit/jacket</option><option>Other</option></select></label>
+            <label className="grid gap-2">What needs to change?<textarea className="min-h-32 rounded-xl border border-ink/15 bg-linen px-4 py-3" name="details" /></label>
+            <label className="grid gap-2">Event date or deadline<input className="rounded-xl border border-ink/15 bg-linen px-4 py-3" name="deadline" type="date" /></label>
+            <button className="mt-4 rounded-full bg-ink px-7 py-4 text-linen" type="button">Submit estimate request</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  );
+}
+
+function PriceTable({ title, rows }: { title: string; rows: string[][] }) {
+  return <div><h2 className="font-serif text-4xl">{title}</h2><div className="mt-6 divide-y divide-linen/15 rounded-3xl border border-linen/20">{rows.map(([service, price]) => <div className="flex items-center justify-between gap-6 p-5" key={service}><span>{service}</span><span className="text-right text-linen/75">{price}</span></div>)}</div></div>;
+}
