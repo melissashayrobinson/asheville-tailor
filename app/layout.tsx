@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -79,6 +81,58 @@ export const metadata: Metadata = {
   },
 };
 
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Asheville Tailor",
+  image: "https://ashevilletailor.com/og-image.jpg",
+  url: "https://ashevilletailor.com",
+  telephone: "",
+  email: "promotifs@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Asheville",
+    addressRegion: "NC",
+    addressCountry: "US",
+  },
+  areaServed: [
+    "Asheville",
+    "Biltmore Forest",
+    "Black Mountain",
+    "Weaverville",
+    "Hendersonville",
+    "Arden",
+    "Fletcher",
+    "Western North Carolina",
+  ],
+  priceRange: "$$",
+  description:
+    "Modern bridal alterations, tailoring, mobile fittings, and custom garment work throughout Asheville and Western North Carolina.",
+  serviceType: [
+    "Bridal Alterations",
+    "Wedding Dress Alterations",
+    "Tailoring",
+    "Suit Alterations",
+    "Dress Alterations",
+    "Mobile Fittings",
+    "Custom Garments",
+  ],
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Wedding Dress Alterations",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "Asheville Tailor",
+  },
+  areaServed: "Asheville, NC",
+  description:
+    "Wedding dress alterations, bridal tailoring, bustle creation, hemming, and wedding-week emergency alterations.",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -87,7 +141,25 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${cormorant.variable} ${inter.variable}`}>
+
+        <script
+          id="local-business-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
+          }}
+        />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(serviceSchema),
+          }}
+        />
+        <Header />
+    
         {children}
+        <Footer />
       </body>
     </html>
   );

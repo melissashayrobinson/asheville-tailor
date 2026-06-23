@@ -1,7 +1,6 @@
 import { ArrowRight, Calendar, Camera, MapPin, Sparkles } from 'lucide-react';
 import EstimateWizard from "./components/EstimateWizard";
 import PricingSection from "./components/PricingSection";
-import Footer from "./components/Footer";
 import AlterationsList from "./components/AlterationsList";
 
 const tailoringPrices = [
@@ -28,15 +27,6 @@ const bridalPrices = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-linen text-ink">
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <a className="font-serif text-2xl tracking-tight" href="#">Asheville Tailor</a>
-        <nav className="hidden gap-8 text-sm md:flex">
-          <a href="#services">Services</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#estimate">Get Estimate</a>
-        </nav>
-        <a className="rounded-full border border-ink px-5 py-2 text-sm hover:bg-ink hover:text-linen" href="#estimate">Book Now</a>
-      </header>
 
       <section className="px-6 py-16 md:py-24 lg:px-12">
         <div className="mx-auto max-w-6xl">
@@ -92,8 +82,6 @@ export default function Home() {
         <h2 className="mt-4 mb-5 text-center font-serif text-5xl">Ready to get started?</h2>
         <a className="rounded-full border border-ink px-5 py-2 text-sm hover:bg-ink hover:text-linen" href="#estimate">Book Services</a>
       </section>
-
-      <Footer />
 
     </main>
   );
