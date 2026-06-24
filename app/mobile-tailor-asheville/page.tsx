@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import EstimateWizard from "../components/EstimateWizard";
 
 export const metadata: Metadata = {
@@ -30,18 +29,12 @@ export default function MobileTailorAsheville() {
 
         <div className="mt-10 flex flex-wrap gap-4">
           <a
-            href="#estimate-wizard"
-            className="rounded-full bg-ink px-8 py-4 text-linen transition hover:opacity-90"
-          >
-            Start Estimate
-          </a>
-
-          <Link
-            href="/"
+            href="#estimate"
             className="rounded-full border border-ink/15 px-8 py-4 transition hover:bg-ink/5"
           >
-            Back to Home
-          </Link>
+            Start Booking
+          </a>
+
         </div>
       </section>
 
@@ -55,16 +48,11 @@ export default function MobileTailorAsheville() {
 
           <div className="space-y-6 text-lg leading-relaxed text-ink/70">
             <p>
-              Great tailoring shouldn't require multiple trips across town.
-              Asheville Tailor offers mobile fitting options for select
-              projects, allowing clients to meet at home, a hotel, wedding
-              venue, office, or private location.
+              Great tailoring shouldn't require multiple trips across town. <strong>Asheville&nbsp;Tailor</strong> offers mobile fitting options for select projects, allowing clients to meet at home, a hotel, wedding venue, office, or private location.
             </p>
 
             <p>
-              This service is especially helpful for destination weddings,
-              busy professionals, bridal parties, and clients managing tight
-              event schedules.
+              This service is especially helpful for destination weddings, busy professionals, bridal parties, and clients managing tight event schedules.
             </p>
           </div>
         </div>
@@ -89,7 +77,7 @@ export default function MobileTailorAsheville() {
           ].map((item) => (
             <div
               key={item}
-              className="rounded-3xl border border-ink/10 p-6"
+              className="rounded-sm border border-ink/10 p-6"
             >
               {item}
             </div>
