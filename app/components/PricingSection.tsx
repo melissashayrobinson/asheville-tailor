@@ -5,7 +5,6 @@ const pricingGroups = [
       ["Pants/Jeans hem", "$25-$55"],
       ["Zipper replacement", "$35-$75"],
       ["Waist adjustment", "$45-$95"],
-      ["Sleeves", "$50-$125"],
       ["Jacket adjustments", "$75-$250"],
     ],
   },
@@ -13,10 +12,9 @@ const pricingGroups = [
     title: "Bridal + Formal",
     items: [
       ["Consultation", "$50"],
-      ["Bustle", "$95-$250"],
-      ["Simple dress alterations", "$350-$500"],
-      ["Moderate bridal alterations", "$500-$1,000"],
-      ["Complex bridal work", "$1,000+"],
+      ["Bustle", "$75-$250"],
+      ["Classic bridal alterations", "$150-$500"],
+      ["Complex rework", "500$-$1,000+"],
     ],
   },
   {
@@ -24,7 +22,6 @@ const pricingGroups = [
     items: [
       ["Mobile fitting", "$50+"],
       ["Priority turnaround", "+50%"],
-      ["Rush turnaround", "+100%"],
       ["Wedding emergency", "$350 minimum"],
     ],
   },
@@ -44,7 +41,7 @@ export default function PricingSection() {
           Final quotes are confirmed before work begins.
         </p>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {pricingGroups.map((group) => (
             <div key={group.title} className="border border-stone-300/70 p-8">
               <h3 className="mb-8 text-3xl font-light">{group.title}</h3>

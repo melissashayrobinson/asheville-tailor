@@ -2,27 +2,7 @@ import { ArrowRight, Calendar, Camera, MapPin, Sparkles } from 'lucide-react';
 import EstimateWizard from "./components/EstimateWizard";
 import PricingSection from "./components/PricingSection";
 import AlterationsList from "./components/AlterationsList";
-
-const tailoringPrices = [
-  ['Pants hem', '$35-55'],
-  ['Jeans hem', '$40-65'],
-  ['Skirt hem', '$45-95'],
-  ['Dress hem', '$75-175'],
-  ['Waist adjustment', '$45-95'],
-  ['Sleeve shortening', '$50-125'],
-  ['Jacket tailoring', '$75-250'],
-  ['Suit alterations', '$95-300']
-];
-
-const bridalPrices = [
-  ['Bridal consultation', '$50, credited toward work'],
-  ['Simple wedding dress alterations', '$250-500'],
-  ['Moderate wedding dress alterations', '$500-1,000'],
-  ['Complex bridal alterations', '$1,000+'],
-  ['Bustle', '$95-250'],
-  ['Wedding emergency service', 'Starting at $250']
-];
-
+import GetStarted from "./components/GetStarted";
 
 export default function Home() {
   return (
@@ -30,15 +10,22 @@ export default function Home() {
 
       <section className="px-6 py-16 md:py-24 lg:px-12">
         <div className="mx-auto max-w-6xl">
-          <h1 className="font-serif text-5xl leading-[1] tracking-tight md:text-8xl">Cherished clothing. Made&nbsp;to&nbsp;fit.</h1>
-          <p className="mt-7 max-w-xl text-lg leading-8 text-ink/75">Mobile tailoring, bridal alterations, and custom garment work for Asheville weddings and destination celebrations throughout Western North Carolina.</p>
+          <h1 className="font-serif text-5xl leading-[1] tracking-tight md:text-6xl">Cherished clothing. Made&nbsp;to&nbsp;fit.</h1>
+          <p className="mt-7 max-w-xl text-lg leading-8 text-ink/75">Mobile tailoring, bridal alterations, and custom garment work for Asheville weddings and destination celebrations throughout Western North Carolina. </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
 
             <a className="inline-flex items-center justify-center rounded-full border border-ink px-7 py-4" href="#estimate">Book Services</a>
             <a className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-4 text-linen" href="#pricing">View Pricing <ArrowRight className="ml-2 h-4 w-4" /></a>
           </div>
         </div>
-        
+      </section>
+    
+      <section className="border-y border-ink/10 bg-bone mb-10" id="services">
+        <div className="mx-auto grid max-w-6xl gap-6 px-6 py-14 md:grid-cols-1">
+            <div className="rounded-3xl bg-linen p-7 text-center">
+              <h2 className="font-serif text-3xl">Asheville Tailor brings a modern, thoughtful tailoring experience to Western North Carolina. We combine exceptional craftsmanship with easy pricing, online booking and progress tracking, and mobile fittings.</h2>
+            </div>
+        </div>
       </section>
 
       <section className="px-6 lg:px-12 pb-24">
@@ -53,8 +40,7 @@ export default function Home() {
 
           <div className="absolute bottom-0 left-0 p-10 lg:p-16">
             <p className="max-w-lg text-white text-lg leading-relaxed">
-              Modern fitting service for real life, wedding weeks,
-              and favorite pieces worth keeping.
+              Modern fitting service for real life, wedding weeks, and favorite pieces worth keeping.
             </p>
           </div>
         </div>
@@ -71,17 +57,14 @@ export default function Home() {
         </div>
       </section>
 
-      <AlterationsList />
 
       <EstimateWizard />
 
       <PricingSection />
 
-      <section className="mx-auto max-w-3xl px-6 py-20 text-center" id="estimate">
-        <p className="text-center text-sm uppercase tracking-[0.3em] text-moss">Start here</p>
-        <h2 className="mt-4 mb-5 text-center font-serif text-5xl">Ready to get started?</h2>
-        <a className="rounded-full border border-ink px-5 py-2 text-sm hover:bg-ink hover:text-linen" href="#estimate">Book Services</a>
-      </section>
+      <AlterationsList />
+
+      <GetStarted />
 
     </main>
   );

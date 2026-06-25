@@ -80,7 +80,7 @@ export default function EstimateWizard() {
 };
 
   return (
-    <section id="estimate" className="bg-[#1c1b19] px-6 py-24 text-[#f5f2eb] lg:px-12">
+    <section id="estimate" className="bg-[#435fba] px-6 py-24 text-[#f5f2eb] lg:px-12">
       
       <div className="mx-auto max-w-6xl">
       

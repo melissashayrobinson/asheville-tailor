@@ -1,10 +1,11 @@
 const alterationGroups = [
   {
-    title: "Alterations",
+    title: "Bridal Alterations",
     intro: "Wedding gowns, bridal separates, veils, and wedding-week adjustments.",
     items: [
       "Wedding dress hemming",
       "Bodice alterations",
+      "Bustle creation",
       "Strap shortening",
       "Sleeve adjustments",
       "Train shortening",
