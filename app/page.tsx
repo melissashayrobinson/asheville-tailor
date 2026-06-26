@@ -23,7 +23,7 @@ export default function Home() {
       <section className="border-y border-ink/10 bg-bone mb-10" id="services">
         <div className="mx-auto grid max-w-6xl gap-6 px-6 py-14 md:grid-cols-1">
             <div className="rounded-3xl bg-linen p-7 text-center">
-              <h2 className="font-serif text-3xl">Asheville Tailor brings a modern, thoughtful tailoring experience to Western North Carolina. We combine exceptional craftsmanship with easy pricing, online booking and progress tracking, and mobile fittings.</h2>
+              <h2 className="font-serif text-3xl">The Asheville Tailor brings a modern, thoughtful tailoring experience to Western North Carolina. We combine exceptional craftsmanship with easy pricing, online booking and progress tracking, and mobile fittings.</h2>
             </div>
         </div>
       </section>

@@ -70,7 +70,7 @@ export default function Footer() {
 
         <div className="mt-20 flex flex-col gap-4 border-t border-ink/10 pt-8 text-sm text-ink/50 md:flex-row md:items-center md:justify-between">
         <p>
-            © {new Date().getFullYear()} Asheville Tailor
+            © {new Date().getFullYear()} The Asheville Tailor
         </p>
 
         <p>
