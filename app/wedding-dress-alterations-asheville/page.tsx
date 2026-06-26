@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import EstimateWizard from "../components/EstimateWizard";
 
 export const metadata: Metadata = {
-  title: "Wedding Dress Alterations Asheville NC | Asheville Tailor",
+  title: "Wedding Dress Alterations Asheville NC | The Asheville Tailor",
   description:
     "Wedding dress alterations in Asheville, NC. Bridal hemming, bustles, bodice adjustments, mobile fittings, and last-minute wedding dress support.",
   alternates: {
