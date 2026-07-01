@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await resend.emails.send({
+    const emailResult = await resend.emails.send({
       from: "Asheville Tailor <onboarding@resend.dev>",
       to: process.env.BOOKING_NOTIFICATION_EMAIL!,
       subject: `New Booking Request — ${formData.get("garment") || "Garment"}`,
@@ -77,12 +77,14 @@ export async function POST(request: Request) {
         <p><strong>Details:</strong><br/>${formData.get("details") || ""}</p>
         <p><strong>Photo notes:</strong><br/>${formData.get("photoNote") || ""}</p>
         <p><strong>Photos:</strong> ${photoUrls.length}</p>
-        ${photoUrls
-          .map((url) => `<p><a href="${url}">View photo</a></p>`)
-          .join("")}
+        ${photoUrls.map((url) => `<p><a href="${url}">View photo</a></p>`).join("")}
         <p><a href="https://ashevilletailor.com/admin">View dashboard</a></p>
       `,
     });
+
+    if (emailResult.error) {
+      console.error("Resend email error:", emailResult.error);
+    }
 
     return NextResponse.json({
       success: true,
