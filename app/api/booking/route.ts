@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
       const fileExt = photo.name.split(".").pop();
       const fileName = `${crypto.randomUUID()}.${fileExt}`;
-      const filePath = `estimate-requests/${fileName}`;
+      const filePath = `booking-requests/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from("estimate-photos")
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       photoUrls.push(data.publicUrl);
     }
 
-    const { error } = await supabase.from("estimate_requests").insert({
+    const { error } = await supabase.from("booking_requests").insert({
       name: formData.get("name"),
       email: formData.get("email"),
       phone: formData.get("phone"),
@@ -61,7 +61,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Estimate request saved.",
+      message: "Booking request saved.",
     });
   } catch (error) {
     console.error(error);

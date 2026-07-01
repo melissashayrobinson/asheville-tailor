@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Button from "./Button";
 
 export default function MobileZipCheck() {
   const [zip, setZip] = useState("");
@@ -58,12 +59,10 @@ export default function MobileZipCheck() {
                   className="flex-1 rounded-full border border-ink/15 bg-bone px-5 py-4"
                 />
 
-                <button
-                  type="submit"
-                  className="rounded-full bg-ink px-7 py-4 text-linen"
-                >
+                <Button variant="primary">
                   {loading ? "Checking..." : "Check Area"}
-                </button>
+                </Button>
+                
               </div>
             </label>
           </form>
@@ -75,16 +74,14 @@ export default function MobileZipCheck() {
                 {result.state}.
               </p>
 
-              <p className="mt-2 text-sm text-ink/70">
+              <p className="mt-2 text-sm text-ink/70 mb-5">
                 You’re approximately {result.distance} miles from our base.
               </p>
 
-              <a
-                href="/#estimate-wizard"
-                className="mt-5 inline-flex rounded-full bg-ink px-6 py-3 text-linen"
-              >
-                Start Estimate
-              </a>
+              <Button href="/#booking" variant="secondary">
+                Start Booking
+              </Button>
+
             </div>
           )}
 

@@ -26,7 +26,7 @@ export default function NotFound() {
           </Link>
 
           <Link
-            href="/#estimate"
+            href="/#booking"
             className="rounded-full border border-ink/15 px-8 py-4 transition hover:bg-ink/5"
           >
             Start Booking

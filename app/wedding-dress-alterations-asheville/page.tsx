@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import EstimateWizard from "../components/EstimateWizard";
+import BookingWizard from "../components/BookingWizard";
 
 export const metadata: Metadata = {
   title: "Wedding Dress Alterations Asheville NC | The Asheville Tailor",
@@ -30,7 +30,7 @@ export default function WeddingDressAlterationsAsheville() {
 
         <div className="mt-10 flex flex-wrap gap-4">
           <a
-            href="#estimate"
+            href="#booking"
             className="rounded-full border border-ink/15 px-8 py-4 transition hover:bg-ink/5"
           >
             Start Booking
@@ -56,7 +56,7 @@ export default function WeddingDressAlterationsAsheville() {
             </p>
 
             <p>
-              Start with an online estimate request where you'll share your photos of your dress, your timeline, and what needs to change. We'll review the details and help you
+              Start with an online booking request where you'll share your photos of your dress, your timeline, and what needs to change. We'll review the details and help you
               decide on the best next step before you book a fitting.
             </p>
           </div>
@@ -96,11 +96,11 @@ export default function WeddingDressAlterationsAsheville() {
 
           <p className="mx-auto mt-6 max-w-2xl text-lg opacity-80">
             Dress arrived late, zipper trouble, unexpected fit issue, or bustle
-            problem? Submit an estimate request and include your wedding date.
+            problem? Submit an booking request and include your wedding date.
           </p>
 
           <a
-            href="#estimate"
+            href="#booking"
             className="mt-10 inline-flex rounded-full border border-ink/15 px-8 py-4 transition hover:bg-ink/5"
           >
             Start a Booking
@@ -141,8 +141,8 @@ export default function WeddingDressAlterationsAsheville() {
         </div>
       </section>
 
-      <section id="estimate">
-        <EstimateWizard />
+      <section id="booking">
+        <BookingWizard />
       </section>
 
     </main>

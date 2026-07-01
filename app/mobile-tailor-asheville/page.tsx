@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import EstimateWizard from "../components/EstimateWizard";
+import BookingWizard from "../components/BookingWizard";
 
 export const metadata: Metadata = {
   title: "Mobile Tailor Asheville NC | In-Home & On-Site Fittings",
@@ -29,7 +29,7 @@ export default function MobileTailorAsheville() {
 
         <div className="mt-10 flex flex-wrap gap-4">
           <a
-            href="#estimate"
+            href="#booking"
             className="rounded-full border border-ink/15 px-8 py-4 transition hover:bg-ink/5"
           >
             Start Booking
@@ -144,9 +144,7 @@ export default function MobileTailorAsheville() {
         </div>
       </section>
 
-      <section id="estimate-wizard">
-        <EstimateWizard />
-      </section>
+      <BookingWizard />
 
     </main>
   );

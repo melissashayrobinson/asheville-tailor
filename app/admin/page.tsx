@@ -19,14 +19,14 @@ export default async function AdminPage() {
   );
 
   const { data, error } = await supabase
-    .from("estimate_requests")
+    .from("booking_requests")
     .select("*")
     .order("created_at", { ascending: false });
 
   return (
     <main className="min-h-screen bg-[#f5f2eb] p-10">
       <h1 className="mb-8 text-5xl font-light">
-        Estimate Requests
+        Booking Requests
       </h1>
 
       {error && (

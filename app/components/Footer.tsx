@@ -26,19 +26,19 @@ export default function Footer() {
 
             <ul className="space-y-3">
                 <li>
-                <a href="#services" className="hover:opacity-60">
+                <a href="/#alterations" className="hover:opacity-60">
                     Services
                 </a>
                 </li>
 
                 <li>
-                <a href="#pricing" className="hover:opacity-60">
+                <a href="/#pricing" className="hover:opacity-60">
                     Pricing
                 </a>
                 </li>
 
                 <li>
-                <a href="#estimate" className="hover:opacity-60">
+                <a href="/#booking" className="hover:opacity-60">
                     Start a Booking
                 </a>
                 </li>

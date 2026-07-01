@@ -14,7 +14,7 @@ const garmentPrices: Record<string, string> = {
   Other: "Custom estimate",
 };
 
-export default function EstimateWizard() {
+export default function BookingWizard() {
   const [step, setStep] = useState(1);
   const [garment, setGarment] = useState("");
   const [timeline, setTimeline] = useState("");
@@ -35,7 +35,7 @@ export default function EstimateWizard() {
   const next = () => setStep((s) => Math.min(s + 1, 6));
   const back = () => setStep((s) => Math.max(s - 1, 1));
 
-  const submitEstimate = async () => {
+  const submitBooking = async () => {
   setIsSubmitting(true);
   setSubmitError("");
 
@@ -55,7 +55,7 @@ export default function EstimateWizard() {
       formData.append("photos", photo);
     });
 
-    const response = await fetch("/api/estimate", {
+    const response = await fetch("/api/booking", {
       method: "POST",
       body: formData,
     });
@@ -64,7 +64,7 @@ export default function EstimateWizard() {
       throw new Error("Submission failed");
     }
 
-    trackEvent("estimate_submitted", {
+    trackEvent("booking_submitted", {
       garment_type: garment,
       timeline: timeline,
       has_photos: photos.length > 0,
@@ -80,7 +80,7 @@ export default function EstimateWizard() {
 };
 
   return (
-    <section id="estimate" className="bg-[#435fba] px-6 py-24 text-[#f5f2eb] lg:px-12">
+    <section id="booking" className="bg-imperial-blue px-6 py-24 text-parchment lg:px-12">
       
       <div className="mx-auto max-w-6xl">
       
@@ -251,7 +251,7 @@ export default function EstimateWizard() {
               </p>
 
               <button
-                onClick={submitEstimate}
+                onClick={submitBooking}
                 disabled={isSubmitting}
                 className="inline-flex rounded-full bg-[#f5f2eb] px-8 py-4 text-[#1c1b19] transition hover:bg-white disabled:opacity-60"
               >

@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     );
 
     const { error } = await supabase
-      .from("estimate_requests")
+      .from("booking_requests")
       .update({ status })
       .eq("id", id);
 
