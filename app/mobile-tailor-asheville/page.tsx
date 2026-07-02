@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BookingWizard from "../components/BookingWizard";
+import Button from "../components/Button";
 
 export const metadata: Metadata = {
   title: "Mobile Tailor Asheville NC | In-Home & On-Site Fittings",
@@ -28,13 +29,9 @@ export default function MobileTailorAsheville() {
         </p>
 
         <div className="mt-10 flex flex-wrap gap-4">
-          <a
-            href="#booking"
-            className="rounded-full border border-ink/15 px-8 py-4 transition hover:bg-ink/5"
-          >
-            Start Booking
-          </a>
-
+          <Button href="#booking">
+            Start a Booking
+          </Button>
         </div>
       </section>
 
@@ -48,7 +45,7 @@ export default function MobileTailorAsheville() {
 
           <div className="space-y-6 text-lg leading-relaxed text-ink/70">
             <p>
-              Great tailoring shouldn't require multiple trips across town. <strong>Asheville&nbsp;Tailor</strong> offers mobile fitting options for select projects, allowing clients to meet at home, a hotel, wedding venue, office, or private location.
+              Great tailoring shouldn't require multiple trips across town. <strong>The&nbsp;Asheville&nbsp;Tailor</strong> offers mobile fitting to allow clients to meet at home, their hotel, wedding venue, or office.
             </p>
 
             <p>
@@ -60,16 +57,16 @@ export default function MobileTailorAsheville() {
 
       <section className="mx-auto max-w-6xl px-6 py-20">
         <h2 className="font-serif text-4xl">
-          Mobile fitting services may include
+          Mobile service includes:
         </h2>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {[
             "Wedding dress fittings",
+            "Wedding dress alterations",
             "Bridesmaid fittings",
             "Mother of the bride fittings",
             "Suit fittings",
-            "Formalwear consultations",
             "Hotel fittings",
             "Venue appointments",
             "Home appointments",
@@ -85,14 +82,14 @@ export default function MobileTailorAsheville() {
         </div>
       </section>
 
-      <section className="bg-ink px-6 py-20 text-linen">
+      <section className="bg-ink px-6 py-20 text-parchment">
         <div className="mx-auto max-w-5xl text-center">
           <p className="text-sm uppercase tracking-[0.3em] opacity-60">
             Destination Wedding?
           </p>
 
           <h2 className="mt-4 font-serif text-5xl">
-            We work with visitors, planners, and wedding professionals.
+            We work with visitors, planners, and local wedding professionals.
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg opacity-80">
@@ -115,8 +112,7 @@ export default function MobileTailorAsheville() {
             </h3>
 
             <p className="mt-3 text-ink/70">
-              Yes. Mobile fitting appointments may be available depending on
-              location, project scope, and scheduling availability.
+              Yes. Mobile fitting appointments are available depending on location, project scope, and scheduling availability.
             </p>
           </div>
 
@@ -126,8 +122,7 @@ export default function MobileTailorAsheville() {
             </h3>
 
             <p className="mt-3 text-ink/70">
-              Venue and hotel appointments may be available for bridal and
-              wedding-related projects.
+              Venue and hotel appointments may be available for bridal and wedding-related projects.
             </p>
           </div>
 
@@ -137,8 +132,7 @@ export default function MobileTailorAsheville() {
             </h3>
 
             <p className="mt-3 text-ink/70">
-              Travel and mobile fitting fees vary based on location and project
-              requirements.
+              Travel and mobile fitting fees vary based on location and project requirements.
             </p>
           </div>
         </div>
