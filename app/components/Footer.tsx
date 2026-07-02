@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-2">
         <div>
             <h3 className="font-serif text-4xl">
-            Asheville Tailor
+            The Asheville Tailor
             </h3>
 
             <p className="mt-6 max-w-md text-ink/70">
@@ -25,20 +25,23 @@ export default function Footer() {
             </p>
 
             <ul className="space-y-3">
+
                 <li>
-                <a href="/#alterations" className="hover:opacity-60">
+                <a href="/how-it-works" className="underline-offset-4 underline decoration-transparent transition-colors duration-200 hover:underline hover:decoration-current">
+                    How it Works
+                </a>
+                </li>
+
+                <li>
+                <a href="/#alterations" className="underline-offset-4 underline decoration-transparent transition-colors duration-200 hover:underline hover:decoration-current">
                     Services
                 </a>
                 </li>
 
-                <li>
-                <a href="/#pricing" className="hover:opacity-60">
-                    Pricing
-                </a>
-                </li>
+
 
                 <li>
-                <a href="/#booking" className="hover:opacity-60">
+                <a href="/#booking" className="underline-offset-4 underline decoration-transparent transition-colors duration-200 hover:underline hover:decoration-current">
                     Start a Booking
                 </a>
                 </li>
@@ -58,7 +61,7 @@ export default function Footer() {
                     href="https://instagram.com/ashevilletailor"
                     target="_blank"
                     rel="noreferrer"
-                    className="hover:opacity-60"
+                    className="underline-offset-4 underline decoration-transparent transition-colors duration-200 hover:underline hover:decoration-current"
                 >
                     Instagram
                 </a>

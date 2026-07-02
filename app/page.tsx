@@ -1,5 +1,5 @@
 import { ArrowRight, Calendar, Camera, MapPin, Sparkles } from 'lucide-react';
-import BookingWizard from "./components/BookingWizard";
+import BookingWizard from './components/BookingWizard';
 import PricingSection from "./components/PricingSection";
 import AlterationsList from "./components/AlterationsList";
 import GetStarted from "./components/GetStarted";
@@ -8,7 +8,7 @@ import Button from './components/Button';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-linen text-ink">
+    <main className="min-h-screen text-ink">
 
       <section className="px-6 py-16 md:py-24 lg:px-12">
         <div className="mx-auto max-w-6xl">
@@ -27,7 +27,7 @@ export default function Home() {
         </div>
       </section>
     
-      <section className="border-y border-ink/10 bg-bone mb-10" id="services">
+      <section className="border-y border-ink/10 bg-bone" id="services">
         <div className="mx-auto grid max-w-6xl gap-6 px-6 py-14 md:grid-cols-1">
             <div className="rounded-3xl bg-linen p-7 text-center">
               <h2 className="font-serif text-3xl">The Asheville Tailor brings a modern, thoughtful tailoring experience to Western North Carolina. We combine exceptional craftsmanship with easy pricing, online booking, and mobile fittings.</h2>
@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-6 lg:px-12 pb-24">
+      <section className="px-6 lg:px-12 py-12">
         <div className="relative overflow-hidden rounded-[32px]">
           <img
             src="/images/hero.jpg"

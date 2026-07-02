@@ -70,7 +70,6 @@ export default function BookingWizard() {
       has_photos: photos.length > 0,
     });
 
-
     setSubmitted(true);
   } catch (error) {
     setSubmitError("Something went wrong. Please try again.");

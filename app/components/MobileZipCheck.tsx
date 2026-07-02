@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Button from "./Button";
+import { trackEvent } from "../../lib/gtag";
+
 
 export default function MobileZipCheck() {
   const [zip, setZip] = useState("");
@@ -22,6 +24,19 @@ export default function MobileZipCheck() {
     });
 
     const data = await response.json();
+
+    if (data.success) {
+      trackEvent(
+        data.inRange
+          ? "mobile_service_available"
+          : "mobile_service_unavailable",
+        {
+          distance: data.distance,
+          city: data.city,
+          state: data.state,
+        }
+      );
+    }
     setResult(data);
     setLoading(false);
   }

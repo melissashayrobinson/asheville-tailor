@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function MobileTailorAsheville() {
   return (
-    <main className="bg-linen text-ink">
+    <main className="bg-white text-ink">
       <section className="mx-auto max-w-5xl px-6 py-24">
         <p className="text-sm uppercase tracking-[0.3em] text-moss">
           Mobile Tailoring
