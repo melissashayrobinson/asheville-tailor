@@ -63,7 +63,8 @@ export async function POST(request: Request) {
     }
 
     const emailResult = await resend.emails.send({
-      from: "Asheville Tailor <onboarding@resend.dev>",
+      from: "The Asheville Tailor <bookings@bookings.ashevilletailor.com>",
+      replyTo: "bookings@ashevilletailor.com",
       to: process.env.BOOKING_NOTIFICATION_EMAIL!,
       subject: `New Booking Request — ${formData.get("garment") || "Garment"}`,
       html: `
