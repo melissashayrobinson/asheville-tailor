@@ -79,7 +79,7 @@ export default function BookingWizard() {
 };
 
   return (
-    <section id="booking" className="bg-imperial-blue px-6 py-24 text-parchment lg:px-12">
+    <section id="booking" className="bg-ink px-6 py-24 text-parchment lg:px-12">
       
       <div className="mx-auto max-w-6xl">
       
