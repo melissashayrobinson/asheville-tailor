@@ -4,8 +4,8 @@ import { useState } from "react";
 import { trackEvent } from "../../lib/gtag";
 
 const garmentPrices: Record<string, string> = {
-  "Wedding dress": "$350-$1,000+",
-  "Bridesmaid dress": "$95-$250",
+  "Wedding Dress": "$350-$1,000+",
+  "Bridesmaid Dress": "$95-$250",
   Suit: "$95-$300",
   Pants: "$25-$95",
   Jacket: "$75-$250",

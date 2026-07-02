@@ -83,6 +83,87 @@ export async function POST(request: Request) {
       `,
     });
 
+    const customerEmail = formData.get("email")?.toString();
+    const customerName = formData.get("name")?.toString();
+    const garment = formData.get("garment")?.toString();
+    const eventDate = formData.get("eventDate")?.toString();
+
+    if (customerEmail) {
+      const confirmationResult = await resend.emails.send({
+        from: "The Asheville Tailor <bookings@bookings.ashevilletailor.com>",
+        to: customerEmail,
+        replyTo: "bookings@ashevilletailor.com",
+        subject: "We’ve received your booking request.",
+        html: `
+          <div style="margin:0; padding:0; background:#F5F2EB; color:#1C1B19; font-family:Arial, sans-serif;">
+            <div style="max-width:640px; margin:0 auto; padding:48px 24px;">
+              <p style="font-size:16px; color:#56634F; margin:0 0 28px;">
+                The Asheville Tailor
+              </p>
+
+              <h1 style="font-family:Georgia, serif; font-size:42px; line-height:1.1; font-weight:400; margin:0 0 24px;">
+                Thank you for reaching out${customerName ? `, ${customerName}` : ""}.
+              </h1>
+
+              <p style="font-size:16px; line-height:1.7; color:#3A3732; margin:0 0 32px;">
+                We’ve received your booking request and are looking forward to learning more about your project.
+              </p>
+
+              <div style="background:#FFFFFF; border-radius:24px; padding:24px; margin:32px 0;">
+                <p style="font-size:12px; color:#56634F; margin:0 0 16px;">
+                  Booking Details
+                </p>
+
+                <p style="font-size:15px; line-height:1.6; margin:0 0 8px;">
+                  <strong>Your item:</strong> ${garment || "Not provided"}
+                </p>
+
+                <p style="font-size:15px; line-height:1.6; margin:0;">
+                  <strong>Event date / deadline:</strong> ${eventDate || "Not provided"}
+                </p>
+              </div>
+
+              <hr style="border:none; border-top:1px solid #DDD6C8; margin:36px 0;" />
+
+              <h2 style="font-family:Georgia, serif; font-size:28px; font-weight:400; margin:0 0 24px;">
+                What Happens Next
+              </h2>
+
+              <p style="font-size:15px; line-height:1.7; margin:0 0 20px;">
+                <strong>1. Review</strong><br />
+                We’ll review your request, timeline, and any photos you shared.
+              </p>
+
+              <p style="font-size:15px; line-height:1.7; margin:0 0 20px;">
+                <strong>2. Personal Response</strong><br />
+                You’ll receive a personal reply with recommendations and next steps.
+              </p>
+
+              <p style="font-size:15px; line-height:1.7; margin:0 0 20px;">
+                <strong>3. Fitting</strong><br />
+                We’ll schedule your fitting at your home or office.
+              </p>
+
+              <hr style="border:none; border-top:1px solid #DDD6C8; margin:36px 0;" />
+
+              <p style="font-size:16px; line-height:1.7; color:#3A3732; margin:0 0 24px;">
+                Need to add photos or additional details? Simply reply to this email.
+              </p>
+
+              <p style="font-size:15px; line-height:1.7; margin:32px 0 0;">
+                Warmly,<br />
+                The Asheville Tailor
+              </p>
+            </div>
+          </div>
+        `,
+      });
+
+      if (confirmationResult.error) {
+        console.error("Customer confirmation email error:", confirmationResult.error);
+      }
+    }
+
     if (emailResult.error) {
       console.error("Resend email error:", emailResult.error);
     }
