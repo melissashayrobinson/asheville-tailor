@@ -122,6 +122,7 @@ export async function POST(request: Request) {
         <p><strong>Email:</strong> ${formData.get("email") || ""}</p>
         <p><strong>Phone:</strong> ${formData.get("phone") || ""}</p>
         <p><strong>Garment:</strong> ${formData.get("garment") || ""}</p>
+        <p><strong>Alteration types:</strong> ${formData.get("alterationTypes") || ""}</p>
         <p><strong>Timeline:</strong> ${formData.get("timeline") || ""}</p>
         <p><strong>Event date:</strong> ${formData.get("eventDate") || ""}</p>
         <p><strong>Details:</strong><br/>${formData.get("details") || ""}</p>
