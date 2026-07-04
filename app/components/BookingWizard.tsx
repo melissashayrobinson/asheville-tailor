@@ -6,28 +6,28 @@ import { trackEvent } from "../../lib/gtag";
 const garments = [
   {
     label: "Wedding dress",
-    basePrice: [150, 250],
+    basePrice: [150, 1500],
     alterationOptions: [
-      { label: "Hem", price: [250, 600] },
-      { label: "Bustle", price: [125, 250] },
-      { label: "Bodice adjustment", price: [150, 400] },
-      { label: "Straps", price: [75, 175] },
-      { label: "Sleeves", price: [125, 350] },
-      { label: "Take in / let out", price: [150, 400] },
-      { label: "Add cups", price: [50, 125] },
-      { label: "Other", price: [95, 300] },
+      { label: "Hem", price: [100, 350] },
+      { label: "Bustle", price: [125, 350] },
+      { label: "Bodice adjustment", price: [100, 430] },
+      { label: "Straps", price: [65, 175] },
+      { label: "Sleeves", price: [100, 350] },
+      { label: "Take in / let out", price: [100, 500] },
+      { label: "Add cups", price: [30, 75] },
+      { label: "Other", price: [25, 300] },
     ],
   },
   {
     label: "Bridesmaid or other dress",
-    basePrice: [40, 175],
+    basePrice: [40, 350],
     alterationOptions: [
-      { label: "Hem", price: [75, 175] },
-      { label: "Take in / let out", price: [75, 175] },
+      { label: "Hem", price: [65, 175] },
+      { label: "Take in / let out", price: [100, 275] },
       { label: "Straps", price: [40, 95] },
       { label: "Sleeves", price: [75, 150] },
       { label: "Zipper repair", price: [60, 150] },
-      { label: "Other", price: [50, 150] },
+      { label: "Other", price: [50, 275] },
     ],
   },
   {
@@ -44,7 +44,7 @@ const garments = [
   },
   {
     label: "Suit/jacket/pants",
-    basePrice: [50, 95],
+    basePrice: [25, 250],
     alterationOptions: [
       { label: "Sleeve length", price: [55, 125] },
       { label: "Take in jacket", price: [75, 175] },
@@ -56,7 +56,7 @@ const garments = [
   },
   {
     label: "Other",
-    basePrice: [50, 150],
+    basePrice: [25, 250],
     alterationOptions: [
       { label: "Hem", price: [25, 75] },
       { label: "Take in / let out", price: [25, 200] },
