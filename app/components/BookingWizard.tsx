@@ -1,23 +1,128 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { trackEvent } from "../../lib/gtag";
 
-const garmentPrices: Record<string, string> = {
-  "Wedding Dress": "$350-$1,000+",
-  "Bridesmaid Dress": "$95-$250",
-  Suit: "$95-$300",
-  Pants: "$25-$95",
-  Jacket: "$75-$250",
-  Dress: "$75-$300",
-  Shirt: "$25-$125",
-  Other: "Custom estimate",
-};
+const garments = [
+  {
+    label: "Wedding dress",
+    basePrice: [150, 250],
+    alterationOptions: [
+      { label: "Hem", price: [250, 600] },
+      { label: "Bustle", price: [125, 250] },
+      { label: "Bodice adjustment", price: [150, 400] },
+      { label: "Straps", price: [75, 175] },
+      { label: "Sleeves", price: [125, 350] },
+      { label: "Take in / let out", price: [150, 400] },
+      { label: "Add cups", price: [50, 125] },
+      { label: "Other", price: [95, 300] },
+    ],
+  },
+  {
+    label: "Bridesmaid or other dress",
+    basePrice: [40, 175],
+    alterationOptions: [
+      { label: "Hem", price: [75, 175] },
+      { label: "Take in / let out", price: [75, 175] },
+      { label: "Straps", price: [40, 95] },
+      { label: "Sleeves", price: [75, 150] },
+      { label: "Zipper repair", price: [60, 150] },
+      { label: "Other", price: [50, 150] },
+    ],
+  },
+  {
+    label: "Denim/Jeans or Pants",
+    basePrice: [15, 150],
+    alterationOptions: [
+      { label: "Hem", price: [15, 25] },
+      { label: "Waist adjustment", price: [45, 75] },
+      { label: "Change leg shape", price: [25, 65] },
+      { label: "Replace zipper", price: [25, 75] },
+      { label: "Repair", price: [25, 75] },
+      { label: "Other", price: [15, 100] },
+    ],
+  },
+  {
+    label: "Suit/jacket/pants",
+    basePrice: [50, 95],
+    alterationOptions: [
+      { label: "Sleeve length", price: [55, 125] },
+      { label: "Take in jacket", price: [75, 175] },
+      { label: "Pants hem", price: [25, 45] },
+      { label: "Pants waist", price: [50, 125] },
+      { label: "Change leg shape", price: [45, 95] },
+      { label: "Other", price: [50, 175] },
+    ],
+  },
+  {
+    label: "Other",
+    basePrice: [50, 150],
+    alterationOptions: [
+      { label: "Hem", price: [25, 75] },
+      { label: "Take in / let out", price: [25, 200] },
+      { label: "Repair", price: [40, 150] },
+      { label: "Zipper", price: [25, 150] },
+      { label: "Custom adjustment", price: [95, 300] },
+      { label: "Other", price: [75, 250] },
+    ],
+  },
+];
+
+function getDateKey(date: Date) {
+  return date.toISOString().split("T")[0];
+}
+
+function getSlotDateKey(slot: any) {
+  return new Date(slot.start_time).toISOString().split("T")[0];
+}
+
+function getMonthDays(monthDate: Date) {
+  const year = monthDate.getFullYear();
+  const month = monthDate.getMonth();
+
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+
+  const days = [];
+
+  for (let day = 1; day <= lastDay.getDate(); day++) {
+    days.push(new Date(year, month, day));
+  }
+
+  return {
+    monthLabel: monthDate.toLocaleDateString("en-US", {
+      month: "long",
+      year: "numeric",
+    }),
+    days,
+    firstDayOffset: firstDay.getDay(),
+  };
+}
+
+function getDurationLabel(startTime: string, endTime: string) {
+  const start = new Date(startTime).getTime();
+  const end = new Date(endTime).getTime();
+  const minutes = Math.round((end - start) / 60000);
+
+  if (minutes === 60) return "1 hour";
+  if (minutes < 60) return `${minutes} minutes`;
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (remainingMinutes === 0) return `${hours} hours`;
+
+  return `${hours} hr ${remainingMinutes} min`;
+}
+
+
 
 export default function BookingWizard() {
   const [step, setStep] = useState(1);
   const [garment, setGarment] = useState("");
+  const [alterationTypes, setAlterationTypes] = useState<string[]>([]);
   const [timeline, setTimeline] = useState("");
+  const [showDetails, setShowDetails] = useState(false);
   const [details, setDetails] = useState("");
 
   const [name, setName] = useState("");
@@ -32,51 +137,108 @@ export default function BookingWizard() {
   const [photos, setPhotos] = useState<File[]>([]);
   const [photoNote, setPhotoNote] = useState("");
 
+  const [availableSlots, setAvailableSlots] = useState<any[]>([]);
+  const [selectedSlotId, setSelectedSlotId] = useState("");
+
+  const [selectedDate, setSelectedDate] = useState("");
+  const [calendarMonth, setCalendarMonth] = useState(new Date());
+  const [needsAnotherTime, setNeedsAnotherTime] = useState(false);
+
   const next = () => setStep((s) => Math.min(s + 1, 6));
   const back = () => setStep((s) => Math.max(s - 1, 1));
 
-  const submitBooking = async () => {
-  setIsSubmitting(true);
-  setSubmitError("");
+  useEffect(() => {
+    async function loadAvailability() {
+      const response = await fetch("/api/availability");
+      const data = await response.json();
 
-  try {
-    const formData = new FormData();
-
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("garment", garment);
-    formData.append("timeline", timeline);
-    formData.append("eventDate", eventDate);
-    formData.append("details", details);
-    formData.append("photoNote", photoNote);
-
-    photos.forEach((photo) => {
-      formData.append("photos", photo);
-    });
-
-    const response = await fetch("/api/booking", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error("Submission failed");
+      if (data.success) {
+        setAvailableSlots(data.slots);
+      }
     }
 
-    trackEvent("booking_submitted", {
-      garment_type: garment,
-      timeline: timeline,
-      has_photos: photos.length > 0,
-    });
+    loadAvailability();
+  }, []);
 
-    setSubmitted(true);
-  } catch (error) {
-    setSubmitError("Something went wrong. Please try again.");
-  } finally {
-    setIsSubmitting(false);
+  const submitBooking = async () => {
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      const formData = new FormData();
+
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("garment", garment);
+      formData.append("alterationTypes", JSON.stringify(alterationTypes));
+      formData.append("timeline", timeline);
+      formData.append("eventDate", eventDate);
+      formData.append("details", details);
+      formData.append("availabilityId", selectedSlotId);
+      formData.append("needsAnotherTime", String(needsAnotherTime));
+
+      const response = await fetch("/api/booking", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
+
+      trackEvent("booking_submitted", {
+        garment_type: garment,
+        timeline: timeline,
+      });
+
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const availableDateKeys = new Set(
+    availableSlots.map((slot) => getSlotDateKey(slot))
+  );
+
+  const selectedDateSlots = availableSlots.filter(
+    (slot) => getSlotDateKey(slot) === selectedDate
+  );
+
+  const calendar = getMonthDays(calendarMonth);
+
+  function toggleAlterationType(option: string) {
+    setAlterationTypes((current) =>
+      current.includes(option)
+        ? current.filter((item) => item !== option)
+        : [...current, option]
+    );
   }
-};
+
+ const selectedGarment = garments.find((item) => item.label === garment);
+
+  const alterationOptions =
+    selectedGarment?.alterationOptions ??
+    garments.find((item) => item.label === "Other")!.alterationOptions;
+
+  const selectedAlterationOptions = alterationOptions.filter((option) =>
+    alterationTypes.includes(option.label)
+  );
+
+  const estimatedLow =
+    selectedAlterationOptions.length > 0
+      ? selectedAlterationOptions.reduce((sum, option) => sum + option.price[0], 0)
+      : selectedGarment?.basePrice[0] ?? 50;
+
+  const estimatedHigh =
+    selectedAlterationOptions.length > 0
+      ? selectedAlterationOptions.reduce((sum, option) => sum + option.price[1], 0)
+      : selectedGarment?.basePrice[1] ?? 150;
+
+  const estimatedPrice = `$${estimatedLow.toLocaleString()}-$${estimatedHigh.toLocaleString()}`;
 
   return (
     <section id="booking" className="bg-ink px-6 py-24 text-parchment lg:px-12">
@@ -108,17 +270,21 @@ export default function BookingWizard() {
             <div>
               <h3 className="mb-6 text-3xl font-light">What type of garment?</h3>
               <div className="grid gap-3 grid-cols-2">
-                {Object.keys(garmentPrices).map((item) => (
+                {garments.map((item) => (
                   <button
-                    key={item}
-                    onClick={() => setGarment(item)}
+                    key={item.label}
+                    type="button"
+                    onClick={() => {
+                      setGarment(item.label);
+                      setAlterationTypes([]);
+                    }}
                     className={`rounded-full border px-5 py-4 text-left transition ${
-                      garment === item
+                      garment === item.label
                         ? "border-[#f5f2eb] bg-[#f5f2eb] text-[#1c1b19]"
                         : "border-white/20 hover:border-white"
                     }`}
                   >
-                    {item}
+                    {item.label}
                   </button>
                 ))}
               </div>
@@ -127,13 +293,59 @@ export default function BookingWizard() {
 
           {step === 2 && (
             <div>
-              <h3 className="mb-6 text-3xl font-light">What needs to change?</h3>
-              <textarea
-                value={details}
-                onChange={(e) => setDetails(e.target.value)}
-                placeholder="Example: The waist needs to come in, the hem is too long, and I need a bustle added."
-                className="min-h-40 w-full rounded-2xl border border-white/20 bg-transparent p-5 text-[#f5f2eb] placeholder:text-stone-500 focus:outline-none focus:ring-1 focus:ring-white"
-              />
+              <h3 className="mb-4 text-3xl font-light">
+                What does your {garment.toLowerCase()} need?
+              </h3>
+
+              <p className="mb-6 text-stone-300">
+                Select all that apply. You can add more detail below.
+              </p>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                {alterationOptions.map((option) => (
+                  <button
+                    key={option.label}
+                    type="button"
+                    onClick={() => toggleAlterationType(option.label)}
+                    className={`rounded-2xl border p-5 text-left transition ${
+                      alterationTypes.includes(option.label)
+                        ? "border-[#f5f2eb] bg-[#f5f2eb] text-[#1c1b19]"
+                        : "border-white/20 text-[#f5f2eb] hover:border-white"
+                    }`}
+                  >
+                    <p>{option.label}</p>
+               
+                    <p className="mt-1 text-sm opacity-60 hidden">
+                      ${option.price[0]}–${option.price[1]}
+                    </p>
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-8">
+                <button
+                  type="button"
+                  onClick={() => setShowDetails((value) => !value)}
+                  className="text-sm text-stone-300 underline underline-offset-4 hover:text-white"
+                >
+                  {showDetails ? "Hide additional notes" : "+ Add additional notes"}
+                </button>
+
+                {showDetails && (
+                  <label className="mt-4 block">
+                    <span className="mb-2 block text-sm text-stone-300">
+                      Tell us a little more
+                    </span>
+
+                    <textarea
+                      value={details}
+                      onChange={(e) => setDetails(e.target.value)}
+                      placeholder="For example: the dress feels tight through the hips, the pants drag when I wear flats, or you'd like to preserve the original jean hem."
+                      className="min-h-32 w-full rounded-2xl border border-white/20 bg-transparent p-5 text-[#f5f2eb] placeholder:text-stone-500"
+                    />
+                  </label>
+                )}
+              </div>
             </div>
           )}
 
@@ -190,42 +402,177 @@ export default function BookingWizard() {
                   value={eventDate}
                   onChange={(e) => setEventDate(e.target.value)}
                   placeholder="Event date or deadline"
-                  className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-[#f5f2eb] placeholder:text-stone-500 focus:outline-none focus:ring-1 focus:ring-white"
+                  className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-[#f5f2eb] placeholder:text-stone-500 focus:outline-none focus:ring-1 focus:ring-white hidden"
                 />
               </div>
             </div>
           )}
 
-{step === 5 && (
-  <div>
-    <h3 className="mb-6 text-3xl font-light">Photos help us estimate.</h3>
+          {step === 5 && (
+            <div>
+              <h3 className="mb-6 text-3xl font-light">Reserve Your Fitting</h3>
 
-    <input
-  type="file"
-  multiple
-  accept="image/*"
-  onChange={(e) => {
-    if (e.target.files) {
-      setPhotos(Array.from(e.target.files));
-    }
-  }}
-  className="w-full rounded-2xl border border-white/20 bg-transparent p-5 mb-5 text-[#f5f2eb] file:mr-4 file:rounded-full file:border-0 file:bg-[#f5f2eb] file:px-4 file:py-2 file:text-[#1c1b19]"
-/>
+              <p className="mb-8 text-stone-300">
+                Select a convenient fitting time below. We’ll personally review your booking and confirm your appointment shortly.
+              </p>
 
-{photos.length > 0 && (
-  <p className="mt-4 text-stone-300">
-    {photos.length} photo{photos.length > 1 ? "s" : ""} selected.
-  </p>
-)}
+              <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr]">
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                  <div className="mb-5 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setCalendarMonth(
+                          new Date(
+                            calendarMonth.getFullYear(),
+                            calendarMonth.getMonth() - 1,
+                            1
+                          )
+                        )
+                      }
+                      className="text-stone-300 hover:text-white"
+                    >
+                      ←
+                    </button>
 
-    <textarea
-      value={photoNote}
-      onChange={(e) => setPhotoNote(e.target.value)}
-      placeholder="Anything we should look for in the photos?"
-      className="min-h-32 w-full rounded-2xl border border-white/20 bg-transparent p-5 text-[#f5f2eb] placeholder:text-stone-500 focus:outline-none focus:ring-1 focus:ring-white"
-    />
-  </div>
-)}
+                    <p className="text-sm uppercase tracking-[0.25em] text-stone-300">
+                      {calendar.monthLabel}
+                    </p>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setCalendarMonth(
+                          new Date(
+                            calendarMonth.getFullYear(),
+                            calendarMonth.getMonth() + 1,
+                            1
+                          )
+                        )
+                      }
+                      className="text-stone-300 hover:text-white"
+                    >
+                      →
+                    </button>
+                  </div>
+
+                  <div className="mb-3 grid grid-cols-7 gap-2 text-center text-xs tracking-[0.2em] text-stone-500">
+                    {["Su", "M", "T", "W", "Th", "F", "Sa"].map((day) => (
+                      <div key={day}>{day}</div>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-2">
+                    {Array.from({ length: calendar.firstDayOffset }).map((_, index) => (
+                      <div key={`empty-${index}`} />
+                    ))}
+
+                    {calendar.days.map((day) => {
+                      const dateKey = getDateKey(day);
+                      const hasAvailability = availableDateKeys.has(dateKey);
+                      const isSelected = selectedDate === dateKey;
+                      const isToday = dateKey === getDateKey(new Date());
+
+                      return (
+                        <button
+                          key={dateKey}
+                          type="button"
+                          disabled={!hasAvailability}
+                          onClick={() => {
+                            setSelectedDate(dateKey);
+                            setSelectedSlotId("");
+                            setNeedsAnotherTime(false);
+                          }}
+                          className={`relative flex aspect-square flex-col items-center justify-center rounded-full text-sm transition duration-300 ${
+                            isSelected
+                              ? "bg-[#f5f2eb] text-[#1c1b19]"
+                              : hasAvailability
+                              ? "text-[#f5f2eb] hover:bg-white/10"
+                              : "text-stone-600"
+                          } ${isToday && !isSelected ? "ring-1 ring-[#B58A5A]/60" : ""}`}
+                        >
+                          <span>{day.getDate()}</span>
+
+                          {hasAvailability && !isSelected && (
+                            <span className="mt-1 h-1 w-1 rounded-full bg-pea" />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  {!selectedDate && (
+                    <div className="rounded-3xl border border-white/10 p-6 text-parchment-300">
+                      Choose an available date to see fitting times.
+                    </div>
+                  )}
+
+                  {selectedDate && (
+                    <div>
+                      <p className="mb-4 text-sm uppercase tracking-[0.25em] text-stone-400">
+                        Available fitting times for{" "}
+                        {new Date(selectedDate + "T00:00:00").toLocaleDateString("en-US", {
+                          weekday: "long",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </p>
+
+                      <div className="grid gap-3 sm:grid-cols-1 transition-all duration-600">
+                        {selectedDateSlots.map((slot) => (
+                          <button
+                            key={slot.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedSlotId(slot.id);
+                              setNeedsAnotherTime(false);
+                            }}
+                            className={`rounded-2xl border p-5 text-left transition ${
+                              selectedSlotId === slot.id
+                                ? "border-[#f5f2eb] bg-[#f5f2eb] text-[#1c1b19]"
+                                : "border-white/20 text-[#f5f2eb] hover:border-white"
+                            }`}
+                          >
+                            <p className="font-medium">
+                              {new Date(slot.start_time).toLocaleTimeString("en-US", {
+                                hour: "numeric",
+                                minute: "2-digit",
+                              })}
+                              <span className="ms-2 mt-1 text-sm opacity-60"> Approximately {getDurationLabel(slot.start_time, slot.end_time)}</span>
+                            </p>
+
+                            
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedDate("");
+                      setSelectedSlotId("");
+                      setNeedsAnotherTime(true);
+                    }}
+                    className={`mt-5 w-full rounded-2xl border p-5 text-left transition ${
+                      needsAnotherTime
+                        ? "border-[#f5f2eb] bg-[#f5f2eb] text-[#1c1b19]"
+                        : "border-white/20 text-[#f5f2eb] hover:border-white"
+                    }`}
+                  >
+                    <p className="font-medium">I don’t see a time that works.</p>
+                    <p className="mt-1 text-sm opacity-70">
+                      Send your booking request and we’ll follow up with additional fitting options.
+                    </p>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {step === 6 && (
             <div>
               <h3 className="mb-4 text-3xl font-light">Estimated range</h3>
@@ -235,13 +582,13 @@ export default function BookingWizard() {
                   {garment || "Garment"}
                 </p>
                 <p className="text-5xl font-light">
-                  {garment ? garmentPrices[garment] : "$95-$250"}
+                  {estimatedPrice}
                 </p>
                 {timeline === "5 business days" && (
-                  <p className="mt-4 text-stone-600">Priority turnaround may add 50%.</p>
+                  <p className="mt-4 text-stone-600 italic text-sm">Priority turnaround may add up to 50%.</p>
                 )}
                 {timeline === "48 hours or less" && (
-                  <p className="mt-4 text-stone-600">Rush service may add 100% or a wedding emergency minimum.</p>
+                  <p className="mt-4 text-stone-600 italic text-sm">Rush service may add up to 50% or a wedding emergency minimum.</p>
                 )}
               </div>
 

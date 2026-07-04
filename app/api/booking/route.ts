@@ -41,18 +41,25 @@ export async function POST(request: Request) {
       photoUrls.push(data.publicUrl);
     }
 
-    const { error } = await supabase.from("booking_requests").insert({
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      garment: formData.get("garment"),
-      timeline: formData.get("timeline"),
-      event_date: formData.get("eventDate"),
-      details: formData.get("details"),
-      photo_note: formData.get("photoNote"),
-      photo_urls: photoUrls,
-      status: "new",
-    });
+    const { data: bookingData, error } = await supabase 
+      .from("booking_requests")
+      .insert({
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        garment: formData.get("garment"),
+        alteration_types: JSON.parse(
+          formData.get("alterationTypes")?.toString() ?? "[]"
+        ),
+        timeline: formData.get("timeline"),
+        event_date: formData.get("eventDate"),
+        details: formData.get("details"),
+        photo_note: formData.get("photoNote"),
+        photo_urls: photoUrls,
+        status: "new",
+      })
+      .select()
+      .single();
 
     if (error) {
       console.error(error);
@@ -60,6 +67,48 @@ export async function POST(request: Request) {
         { success: false, message: "Database error." },
         { status: 500 }
       );
+    }
+
+    const availabilityId = formData.get("availabilityId")?.toString();
+    let appointmentSummary = "";
+
+    if (availabilityId && bookingData) {
+      const { data: slot, error: slotError } = await supabase
+        .from("availability")
+        .select("*")
+        .eq("id", availabilityId)
+        .eq("status", "available")
+        .single();
+
+      if (!slotError && slot) {
+        appointmentSummary = new Date(slot.start_time).toLocaleString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        timeZone: "America/New_York",
+      });
+
+        const { error: appointmentError } = await supabase
+          .from("appointments")
+          .insert({
+            booking_id: bookingData.id,
+            availability_id: availabilityId,
+            start_time: slot.start_time,
+            end_time: slot.end_time,
+            status: "pending_confirmation",
+          });
+
+        if (appointmentError) {
+          console.error("Appointment insert error:", appointmentError);
+        }
+
+        await supabase
+          .from("availability")
+          .update({ status: "booked" })
+          .eq("id", availabilityId);
+      }
     }
 
     const emailResult = await resend.emails.send({
@@ -76,9 +125,6 @@ export async function POST(request: Request) {
         <p><strong>Timeline:</strong> ${formData.get("timeline") || ""}</p>
         <p><strong>Event date:</strong> ${formData.get("eventDate") || ""}</p>
         <p><strong>Details:</strong><br/>${formData.get("details") || ""}</p>
-        <p><strong>Photo notes:</strong><br/>${formData.get("photoNote") || ""}</p>
-        <p><strong>Photos:</strong> ${photoUrls.length}</p>
-        ${photoUrls.map((url) => `<p><a href="${url}">View photo</a></p>`).join("")}
         <p><a href="https://ashevilletailor.com/admin">View dashboard</a></p>
       `,
     });
@@ -86,6 +132,7 @@ export async function POST(request: Request) {
     const customerEmail = formData.get("email")?.toString();
     const customerName = formData.get("name")?.toString();
     const garment = formData.get("garment")?.toString();
+    const timeline = formData.get("timeline")?.toString();
     const eventDate = formData.get("eventDate")?.toString();
 
     if (customerEmail) {
@@ -118,9 +165,19 @@ export async function POST(request: Request) {
                   <strong>Your item:</strong> ${garment || "Not provided"}
                 </p>
 
-                <p style="font-size:15px; line-height:1.6; margin:0;">
-                  <strong>Event date / deadline:</strong> ${eventDate || "Not provided"}
+                <p style="font-size:15px; line-height:1.6; margin:0 0 8px;">
+                  <strong>Timeline:</strong> ${timeline || "Not provided"}
                 </p>
+
+                ${
+                  appointmentSummary
+                    ? `<p style="font-size:15px; line-height:1.6; margin:0px;">
+                        <strong style="color: green;">Reserved fitting time:</strong> ${appointmentSummary}
+                      </p>`
+                    : `<p style="font-size:15px; line-height:1.6; margin:0;">
+                        <strong>Fitting time:</strong> We’ll follow up with options.
+                      </p>`
+                }
               </div>
 
               <hr style="border:none; border-top:1px solid #DDD6C8; margin:36px 0;" />
@@ -131,7 +188,7 @@ export async function POST(request: Request) {
 
               <p style="font-size:15px; line-height:1.7; margin:0 0 20px;">
                 <strong>1. Review</strong><br />
-                We’ll review your request, timeline, and any photos you shared.
+                We’ll review your appointment reservation, garment details, and timeline.
               </p>
 
               <p style="font-size:15px; line-height:1.7; margin:0 0 20px;">
@@ -140,14 +197,14 @@ export async function POST(request: Request) {
               </p>
 
               <p style="font-size:15px; line-height:1.7; margin:0 0 20px;">
-                <strong>3. Fitting</strong><br />
-                We’ll schedule your fitting at your home or office.
+                <strong>3. Confirmation</strong><br />
+                Your fitting time has been reserved. We’ll personally review your request and confirm the appointment shortly.
               </p>
 
               <hr style="border:none; border-top:1px solid #DDD6C8; margin:36px 0;" />
 
               <p style="font-size:16px; line-height:1.7; color:#3A3732; margin:0 0 24px;">
-                Need to add photos or additional details? Simply reply to this email.
+                Want to share photos or additional details? Simply reply to this email.
               </p>
 
               <p style="font-size:15px; line-height:1.7; margin:32px 0 0;">
