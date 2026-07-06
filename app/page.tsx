@@ -1,6 +1,5 @@
 import { ArrowRight, Calendar, Camera, MapPin, Sparkles } from 'lucide-react';
 import BookingWizard from './components/BookingWizard';
-import PricingSection from "./components/PricingSection";
 import AlterationsList from "./components/AlterationsList";
 import GetStarted from "./components/GetStarted";
 import Button from './components/Button';
@@ -18,9 +17,6 @@ export default function Home() {
 
             <Button href="#booking" variant="primary">
               Book Services
-            </Button>
-            <Button href="#pricing" variant="tertiary">
-              View Pricing
             </Button>
             
           </div>
@@ -65,8 +61,6 @@ export default function Home() {
       </section>
 
       <BookingWizard />
-
-      <PricingSection />
 
       <AlterationsList />
 

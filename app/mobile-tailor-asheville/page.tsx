@@ -132,7 +132,7 @@ export default function MobileTailorAsheville() {
             </h3>
 
             <p className="mt-3 text-ink/70">
-              Travel and mobile fitting fees vary based on location and project requirements.
+             There is no fee for locations within our mobile fitting area. Travel outside the mobile fitting area may incur mobile fitting fees vary based on location and project requirements.
             </p>
           </div>
         </div>

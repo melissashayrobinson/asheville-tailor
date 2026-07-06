@@ -1,10 +1,13 @@
 import Link from "next/link";
 
+
 type ButtonProps = {
   href?: string;
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "tertiary";
   className?: string;
+  type?: "button" | "submit" | "reset";
+  onClick?: () => void;
 };
 
 export default function Button({
@@ -12,7 +15,10 @@ export default function Button({
   children,
   variant = "primary",
   className = "",
+  type = "button",
+  onClick,
 }: ButtonProps) {
+
   const base =
     "inline-flex items-center justify-center rounded-full px-8 py-4 transition duration-300";
 
@@ -25,6 +31,7 @@ export default function Button({
 
     tertiary:
       "border border-transparent bg-transparent text-ink hover:border-ink",
+
     disabled:
       "bg-grey text-parchment",
   };
@@ -33,14 +40,18 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <a href={href} className={classes}>
         {children}
-      </Link>
+      </a>
     );
   }
 
   return (
-    <button className={classes}>
+    <button
+      type={type}
+      className={classes}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

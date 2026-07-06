@@ -78,7 +78,9 @@ export default function AddAvailabilityForm() {
       </div>
 
       <div className="mt-6">
-        <Button className="w-full">{loading ? "Adding..." : "Add Slot"}</Button>
+        <Button className="w-full" type="submit">
+          {loading ? "Adding..." : "Add Slot"}
+        </Button>
       </div>
     </form>
   );

@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { trackEvent } from "../../lib/gtag";
+import { ArrowLeft, ArrowRight, Calendar, Camera, MapPin, Sparkles } from 'lucide-react';
+import Button from "./Button";
+
 
 const garments = [
   {
@@ -55,7 +58,7 @@ const garments = [
     ],
   },
   {
-    label: "Other",
+    label: "Other garment",
     basePrice: [25, 250],
     alterationOptions: [
       { label: "Hem", price: [25, 75] },
@@ -125,7 +128,8 @@ export default function BookingWizard() {
   const [showDetails, setShowDetails] = useState(false);
   const [details, setDetails] = useState("");
 
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [eventDate, setEventDate] = useState("");
@@ -135,7 +139,6 @@ export default function BookingWizard() {
   const [submitError, setSubmitError] = useState("");
 
   const [photos, setPhotos] = useState<File[]>([]);
-  const [photoNote, setPhotoNote] = useState("");
 
   const [availableSlots, setAvailableSlots] = useState<any[]>([]);
   const [selectedSlotId, setSelectedSlotId] = useState("");
@@ -167,7 +170,8 @@ export default function BookingWizard() {
     try {
       const formData = new FormData();
 
-      formData.append("name", name);
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
       formData.append("email", email);
       formData.append("phone", phone);
       formData.append("garment", garment);
@@ -222,7 +226,7 @@ export default function BookingWizard() {
 
   const alterationOptions =
     selectedGarment?.alterationOptions ??
-    garments.find((item) => item.label === "Other")!.alterationOptions;
+    garments.find((item) => item.label === "Other garment")!.alterationOptions;
 
   const selectedAlterationOptions = alterationOptions.filter((option) =>
     alterationTypes.includes(option.label)
@@ -246,12 +250,11 @@ export default function BookingWizard() {
       <div className="mx-auto max-w-6xl">
       
         <h2 className="mb-6 text-5xl font-light tracking-[-0.03em] md:text-7xl">
-          Explore + Book Services
+          Book a Fitting
         </h2>
 
         <p className="mb-12 max-w-2xl text-lg leading-relaxed text-stone-300">
-          Tell us what you need altered, when you need it, and what kind of fit
-          you want. You'll receive a price range before booking is confirmed.
+          Tell us what you need altered and when you need it. You'll receive a price range before booking, and final costs with be determined at your appointment.
         </p>
 
         <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 md:p-10">
@@ -294,7 +297,7 @@ export default function BookingWizard() {
           {step === 2 && (
             <div>
               <h3 className="mb-4 text-3xl font-light">
-                What does your {garment.toLowerCase()} need?
+                What needs adjustment on your {garment.toLowerCase()}?
               </h3>
 
               <p className="mb-6 text-stone-300">
@@ -353,7 +356,7 @@ export default function BookingWizard() {
             <div>
               <h3 className="mb-6 text-3xl font-light">When do you need it?</h3>
               <div className="grid gap-3 sm:grid-cols-3">
-                {["2-3 weeks", "5 business days", "48 hours or less"].map((item) => (
+                {["2-3 weeks or later", "5 business days", "48 hours or less"].map((item) => (
                   <button
                     key={item}
                     onClick={() => setTimeline(item)}
@@ -367,6 +370,7 @@ export default function BookingWizard() {
                   </button>
                 ))}
               </div>
+              <p className="mt-6 text-stone-600 italic text-sm">Priority turnaround can add up to 40% or a rush-service minimum.</p>
             </div>
           )
           }
@@ -375,11 +379,17 @@ export default function BookingWizard() {
             <div>
               <h3 className="mb-6 text-3xl font-light">How can we reach you?</h3>
 
-              <div className="grid gap-4">
+              <div className="grid gap-4 md:grid-cols-2">
                 <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="First Name"
+                  className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-[#f5f2eb] placeholder:text-stone-500 focus:outline-none focus:ring-1 focus:ring-white lg:grid-cols-2"
+                />
+                <input
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Last Name"
                   className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-[#f5f2eb] placeholder:text-stone-500 focus:outline-none focus:ring-1 focus:ring-white"
                 />
 
@@ -596,13 +606,13 @@ export default function BookingWizard() {
                 Final pricing is confirmed at fitting before work begins.
               </p>
 
-              <button
+              <Button
                 onClick={submitBooking}
                 disabled={isSubmitting}
                 className="inline-flex rounded-full bg-[#f5f2eb] px-8 py-4 text-[#1c1b19] transition hover:bg-white disabled:opacity-60"
               >
                 {isSubmitting ? "Sending..." : "Request Booking"}
-              </button>
+              </Button>
               {submitted && (
                 <p className="mt-4 text-stone-300">
                   Thank you. Your booking request has been received.
@@ -623,16 +633,16 @@ export default function BookingWizard() {
               disabled={step === 1}
               className="text-stone-400 disabled:opacity-30"
             >
-              Back
+              <ArrowLeft className="inline" /> Back
             </button>
 
             {step < 6 && (
-              <button
+              <Button
                 onClick={next}
-                className="rounded-full bg-[#f5f2eb] px-7 py-3 text-[#1c1b19] transition hover:bg-white"
+                className=""
               >
                 Continue
-              </button>
+              </Button>
             )}
           </div>
         </div>

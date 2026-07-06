@@ -85,7 +85,7 @@ export default function MobileZipCheck() {
           {result?.success && result.inRange && (
             <div className="mt-8 rounded-3xl border border-moss/30 bg-moss/10 p-6">
               <p className="font-medium">
-                Yes — mobile service may be available in {result.city},{" "}
+                Yes — mobile service is available in {result.city},{" "}
                 {result.state}.
               </p>
 
@@ -103,7 +103,7 @@ export default function MobileZipCheck() {
           {result?.success && !result.inRange && (
             <div className="mt-8 rounded-3xl border border-ink/10 p-6">
               <p className="font-medium">
-                It looks like you're outside our mobile fitting range.
+                It looks like you're outside our mobile fitting area.
               </p>
 
               <p className="mt-2 text-sm text-ink/70">

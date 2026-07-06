@@ -45,6 +45,8 @@ export async function POST(request: Request) {
       .from("booking_requests")
       .insert({
         name: formData.get("name"),
+        first_name: formData.get("firstName"),
+        last_name: formData.get("lastName"),
         email: formData.get("email"),
         phone: formData.get("phone"),
         garment: formData.get("garment"),
@@ -54,7 +56,6 @@ export async function POST(request: Request) {
         timeline: formData.get("timeline"),
         event_date: formData.get("eventDate"),
         details: formData.get("details"),
-        photo_note: formData.get("photoNote"),
         photo_urls: photoUrls,
         status: "new",
       })
@@ -119,6 +120,8 @@ export async function POST(request: Request) {
       html: `
         <h2>New booking request</h2>
         <p><strong>Name:</strong> ${formData.get("name") || ""}</p>
+        <p><strong>First Name:</strong> ${formData.get("firstName") || ""}</p>
+        <p><strong>Last Name:</strong> ${formData.get("lastName") || ""}</p>
         <p><strong>Email:</strong> ${formData.get("email") || ""}</p>
         <p><strong>Phone:</strong> ${formData.get("phone") || ""}</p>
         <p><strong>Garment:</strong> ${formData.get("garment") || ""}</p>
@@ -131,7 +134,7 @@ export async function POST(request: Request) {
     });
 
     const customerEmail = formData.get("email")?.toString();
-    const customerName = formData.get("name")?.toString();
+    const customerName = formData.get("firstName")?.toString();
     const garment = formData.get("garment")?.toString();
     const timeline = formData.get("timeline")?.toString();
     const eventDate = formData.get("eventDate")?.toString();

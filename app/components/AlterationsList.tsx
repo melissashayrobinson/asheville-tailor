@@ -111,7 +111,7 @@ export default function AlterationsList() {
               <ul className="mt-8 grid gap-3 text-sm text-ink/80">
                 {group.items.map((item) => (
                   <li key={item} className="flex gap-3">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-moss" />
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-tuscan-sun" />
                     <span>{item}</span>
                   </li>
                 ))}
