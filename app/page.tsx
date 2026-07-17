@@ -12,7 +12,7 @@ export default function Home() {
       <section className="px-6 py-16 md:py-24 lg:px-12">
         <div className="mx-auto max-w-6xl">
           <h1 className="font-serif text-5xl leading-[1] tracking-tight md:text-6xl">Cherished clothing. Made&nbsp;to&nbsp;fit.</h1>
-          <p className="mt-7 max-w-xl text-lg leading-8 text-ink/75">Mobile tailoring, bridal alterations, custom garment work for Asheville weddings, destination celebrations, and everyday wear throughout Western North Carolina. </p>
+          <p className="mt-7 max-w-xl text-lg leading-8 text-ink/75">Mobile tailoring, bridal alterations, and custom garment work for Asheville weddings, destination celebrations, and everyday wear throughout Western North Carolina. </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
 
             <Button href="#booking" variant="primary">
