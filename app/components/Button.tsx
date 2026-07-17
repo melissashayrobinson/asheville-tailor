@@ -53,7 +53,7 @@ export default function Button({
       type={type}
       className={classes}
       onClick={onClick}
-      disabled={disabled}
+    disabled={disabled}
     >
       {children}
     </button>
