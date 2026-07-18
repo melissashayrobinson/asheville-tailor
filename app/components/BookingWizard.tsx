@@ -185,22 +185,22 @@ export default function BookingWizard() {
       formData.append("needsAnotherTime", String(needsAnotherTime));
 
       const response = await fetch("/api/booking", {
-        method: "POST",
-        body: formData,
-      });
+      method: "POST",
+      body: formData,
+    });
 
-      if (!response.ok) {
-        throw new Error("Submission failed");
-      }
+    const result = await response.json();
 
-      const result = await response.json();
+    if (!response.ok) {
+      throw new Error(result.message || "Submission failed");
+    }
 
-      router.push(`/booking/${result.confirmationToken}`);
+    trackEvent("booking_submitted", {
+      garment_type: garment,
+      timeline,
+    });
 
-      trackEvent("booking_submitted", {
-        garment_type: garment,
-        timeline: timeline,
-      });
+    router.push(`/booking/${result.confirmationToken}`);
 
       
     } catch (error) {
