@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { trackEvent } from "../../lib/gtag";
 import { ArrowLeft, ArrowRight, Calendar, Camera, MapPin, Sparkles } from 'lucide-react';
 import Button from "./Button";
-
+import { useRouter } from "next/navigation";
 
 const garments = [
   {
@@ -121,6 +121,8 @@ function getDurationLabel(startTime: string, endTime: string) {
 
 
 export default function BookingWizard() {
+  const router = useRouter();
+
   const [step, setStep] = useState(1);
   const [garment, setGarment] = useState("");
   const [alterationTypes, setAlterationTypes] = useState<string[]>([]);
@@ -191,12 +193,16 @@ export default function BookingWizard() {
         throw new Error("Submission failed");
       }
 
+      const result = await response.json();
+
+      router.push(`/booking/${result.confirmationToken}`);
+
       trackEvent("booking_submitted", {
         garment_type: garment,
         timeline: timeline,
       });
 
-      setSubmitted(true);
+      
     } catch (error) {
       setSubmitError("Something went wrong. Please try again.");
     } finally {

@@ -59,7 +59,7 @@ export async function POST(request: Request) {
         photo_urls: photoUrls,
         status: "new",
       })
-      .select()
+      .select("id, confirmation_token")
       .single();
 
     if (error) {
@@ -232,7 +232,9 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: "Booking request saved.",
+      confirmationToken: bookingData.confirmation_token,
     });
+
   } catch (error) {
     console.error(error);
     return NextResponse.json(
